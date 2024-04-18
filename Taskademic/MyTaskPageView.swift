@@ -1,5 +1,3 @@
-
-
 import SwiftUI
 
 struct MyTaskPageView: View {
@@ -7,9 +5,11 @@ struct MyTaskPageView: View {
     init() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor(Color.blue.opacity(0))
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        appearance.backgroundColor = UIColor(Color.init(red: 112, green: 215, blue: 255))
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+        appearance.largeTitleTextAttributes = [
+            .foregroundColor: UIColor.black,
+        ]
             
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
         UINavigationBar.appearance().standardAppearance = appearance
@@ -38,62 +38,74 @@ struct MyTaskPageView: View {
                                     .foregroundColor(.yellow)
                             }
                         }
+                        .bold()
                         .padding()
-                        .background(Color.blue.opacity(0.0))
+                        .background(Color.white)
                         .cornerRadius(10)
                         .shadow(radius: 1)
                         .listRowBackground(Color.blue.opacity(0))
                     }
                 }
+                .padding(.top, 10)
                 .listStyle(PlainListStyle())
                 
-
-                // Button and navigation area
-                HStack {
+                
+                HStack(spacing: 20) {
                     Button(action: {
                         // Handle previous page action
                     }) {
                         Image(systemName: "chevron.left")
                             .padding()
+                            .frame(width: 50, height: 47)
+                            .background(Color.white.opacity(0.5))
+                            .cornerRadius(10)
                     }
-
-                    Spacer()
-
+                    
+                    
                     Button("Add Task") {
                         // Handle add task action
                     }
+                    .bold()
                     .padding()
+                    .frame(width: 200, height: 50)
                     .foregroundColor(.black)
                     .background(Color.white)
                     .cornerRadius(10)
-
-                    Spacer()
-
+                    
                     Button(action: {
                         // Handle next page action
                     }) {
                         Image(systemName: "chevron.right")
                             .padding()
+                            .frame(width: 50, height: 47)
+                            .background(Color.white.opacity(0.5))
+                            .cornerRadius(10)
                     }
                 }
-                .padding()
-
+                .padding(.horizontal)
+                
+                
+                Spacer()
+                Spacer()
                 // Delete all button
                 Button("Delete All") {
                     // Handle delete all action
                 }
-                .padding()
+                .bold()
+                .frame(width: 340, height: 50)
                 .foregroundColor(.black)
-                .background(Color.white) // Distinct color for important actions
+                .background(Color.white)
                 .cornerRadius(10)
                 .shadow(radius: 2)
+                
+                Spacer()
             }
-            .background(Color.blue.opacity(0.4)) // Background color for the entire view
+            .background(Color.blue.opacity(0.4))
             .navigationBarTitle("My Tasks", displayMode: .inline)
             .navigationBarItems(leading: Image(systemName: "arrow.left"),
                                 trailing: Button("Saved") {
-                                    // Handle save action
-                                }.foregroundColor(.blue))
+            }
+            .foregroundColor(.blue))
         }
     }
 }

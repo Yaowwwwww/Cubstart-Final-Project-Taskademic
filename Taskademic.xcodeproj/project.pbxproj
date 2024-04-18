@@ -11,6 +11,8 @@
 		58BC83732BD0441E004F4420 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BC83722BD0441E004F4420 /* ContentView.swift */; };
 		58BC83752BD04420004F4420 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58BC83742BD04420004F4420 /* Assets.xcassets */; };
 		58BC83792BD04420004F4420 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58BC83782BD04420004F4420 /* Preview Assets.xcassets */; };
+		58BC83882BD0FEA1004F4420 /* LandingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BC83872BD0FEA1004F4420 /* LandingPageView.swift */; };
+		58BC838A2BD0FEDD004F4420 /* MyTaskPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BC83892BD0FEDD004F4420 /* MyTaskPageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,8 @@
 		58BC83742BD04420004F4420 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		58BC83762BD04420004F4420 /* Taskademic.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Taskademic.entitlements; sourceTree = "<group>"; };
 		58BC83782BD04420004F4420 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		58BC83872BD0FEA1004F4420 /* LandingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LandingPageView.swift; path = ../LandingPageView.swift; sourceTree = "<group>"; };
+		58BC83892BD0FEDD004F4420 /* MyTaskPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTaskPageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +58,8 @@
 			children = (
 				58BC83702BD0441E004F4420 /* TaskademicApp.swift */,
 				58BC83722BD0441E004F4420 /* ContentView.swift */,
+				58BC83872BD0FEA1004F4420 /* LandingPageView.swift */,
+				58BC83892BD0FEDD004F4420 /* MyTaskPageView.swift */,
 				58BC83742BD04420004F4420 /* Assets.xcassets */,
 				58BC83762BD04420004F4420 /* Taskademic.entitlements */,
 				58BC83772BD04420004F4420 /* Preview Content */,
@@ -139,7 +145,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58BC838A2BD0FEDD004F4420 /* MyTaskPageView.swift in Sources */,
 				58BC83732BD0441E004F4420 /* ContentView.swift in Sources */,
+				58BC83882BD0FEA1004F4420 /* LandingPageView.swift in Sources */,
 				58BC83712BD0441E004F4420 /* TaskademicApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
