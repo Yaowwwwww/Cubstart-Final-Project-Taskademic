@@ -5,7 +5,7 @@ struct MyTaskPageView: View {
     init() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor(Color.init(red: 112, green: 215, blue: 255))
+        appearance.backgroundColor = UIColor(Color.white.opacity(0.5))
         appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
         appearance.largeTitleTextAttributes = [
             .foregroundColor: UIColor.black,
