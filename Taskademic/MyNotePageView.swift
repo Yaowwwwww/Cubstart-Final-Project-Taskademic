@@ -1,6 +1,15 @@
+//
+//  MyNotePageView.swift
+//  Taskademic
+//
+//  Created by Dina Khatri on 4/18/24.
+
+
+
+import Foundation
 import SwiftUI
 
-struct MyTaskPageView: View {
+struct MyNotePageView: View {
     
     init() {
         let appearance = UINavigationBarAppearance()
@@ -16,13 +25,13 @@ struct MyTaskPageView: View {
     }
     
     @State var tasks = [
-        (name: "Task 1", isStarred: true),
-        (name: "Task 2", isStarred: false),
-        (name: "Task 3", isStarred: true),
-        (name: "Task 4", isStarred: true),
-        (name: "Task 5", isStarred: false)
+        (name: "Note 1", isStarred: true),
+        (name: "Note 2", isStarred: false),
+        (name: "Note 3", isStarred: true),
+        (name: "Note 4", isStarred: true),
+        (name: "Note 5", isStarred: false)
     ]
-    @State private var navigateToAddTask = false
+    @State private var navigateToAddNote = false
     
     var body: some View {
         
@@ -32,7 +41,7 @@ struct MyTaskPageView: View {
                 List {
                     ForEach(0..<tasks.count, id: \.self) { index in
                         HStack {
-                            Image(systemName: "square")
+                           
                             Text(tasks[index].name)
                             Spacer()
                             if tasks[index].isStarred {
@@ -64,9 +73,9 @@ struct MyTaskPageView: View {
                     }
                     
                     
-                    Button("Add Task") {
+                    Button("Add Note") {
                         // Handle add task action
-                        self.navigateToAddTask = true
+                        self.navigateToAddNote = true
                     }
                     .bold()
                     .padding()
@@ -104,18 +113,18 @@ struct MyTaskPageView: View {
                 Spacer()
             }
             .background(Color.blue.opacity(0.4))
-            .navigationBarTitle("My Tasks", displayMode: .inline)
+            .navigationBarTitle("My Events", displayMode: .inline)
             .navigationBarItems(trailing: Button("Save") {
             }
             .foregroundColor(.blue))
-            .navigationDestination(isPresented: $navigateToAddTask) {
-                AddTaskView()}
+            .navigationDestination(isPresented: $navigateToAddNote) {
+                AddNoteView()}
         }
     }
 }
 
-struct MyTaskPage_Previews: PreviewProvider {
+struct MyNotePage_Previews: PreviewProvider {
     static var previews: some View {
-        MyTaskPageView()
+        MyNotePageView()
     }
 }

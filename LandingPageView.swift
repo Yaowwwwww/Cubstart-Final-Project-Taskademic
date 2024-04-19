@@ -1,8 +1,12 @@
 import SwiftUI
 
 struct LandingPageView: View {
+    @State private var navigateToTasks = false
+    @State private var navigateToNotes = false
+    @State private var navigateToEvents = false
+    @State private var navigateToFavorites = false
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 VStack {
                     Image("TaskademiclLogo")
@@ -20,30 +24,53 @@ struct LandingPageView: View {
                     Text("Organize, Optimize, Achieve")
                         .padding(.bottom, 30)
                         .foregroundColor(Color.init(red: 0, green: 0, blue: 0))
-
-                    NavigationLink(destination: MyTaskPageView().navigationBarTitle("").navigationBarHidden(true)) {
-                        Text("My Tasks")
-                    }
-                    .buttonStyle(MainButtonStyle())
-                    .padding(.bottom, 10)
-
-                    NavigationLink(destination: MyTaskPageView().navigationBarTitle("").navigationBarHidden(true)) {
-                        Text("My Notes")
-                    }
-                    .buttonStyle(MainButtonStyle())
-                    .padding(.bottom, 10)
-
-                    NavigationLink(destination: MyTaskPageView().navigationBarTitle("").navigationBarHidden(true)) {
-                        Text("My Events")
-                    }
-                    .buttonStyle(MainButtonStyle())
-                    .padding(.bottom, 10)
-
-                    NavigationLink(destination: MyTaskPageView().navigationBarTitle("").navigationBarHidden(true)) {
-                        Text("Favorite List")
-                    }
-                    .buttonStyle(MainButtonStyle())
-                    .padding(.bottom, 10)
+                    
+                    Button("My Tasks") {
+                        //Handle add task action
+                        self.navigateToTasks = true
+                    }.buttonStyle(MainButtonStyle())
+                        .padding(.bottom, 10).bold()
+                    
+                    Button("My Notes") {
+                        //Handle add task action
+                        self.navigateToNotes = true
+                    }.buttonStyle(MainButtonStyle())
+                        .padding(.bottom, 10).bold()
+                    
+                    Button("My Events") {
+                        //Handle add task action
+                        self.navigateToEvents = true
+                    }.buttonStyle(MainButtonStyle())
+                        .padding(.bottom, 10).bold()
+                    
+                    Button("My Favorites") {
+                        //Handle add task action
+                        self.navigateToFavorites = true
+                    }.buttonStyle(MainButtonStyle())
+                        .padding(.bottom, 10).bold()
+//                    NavigationLink(destination: MyTaskPageView().navigationBarTitle("").navigationBarHidden(true)) {
+//                        Text("My Tasks")
+//                    }
+//                    .buttonStyle(MainButtonStyle())
+//                    .padding(.bottom, 10)
+//
+//                    NavigationLink(destination: MyTaskPageView().navigationBarTitle("").navigationBarHidden(true)) {
+//                        Text("My Notes")
+//                    }
+//                    .buttonStyle(MainButtonStyle())
+//                    .padding(.bottom, 10)
+//
+//                    NavigationLink(destination: MyTaskPageView().navigationBarTitle("").navigationBarHidden(true)) {
+//                        Text("My Events")
+//                    }
+//                    .buttonStyle(MainButtonStyle())
+//                    .padding(.bottom, 10)
+//
+//                    NavigationLink(destination: MyTaskPageView().navigationBarTitle("").navigationBarHidden(true)) {
+//                        Text("Favorite List")
+//                    }
+//                    .buttonStyle(MainButtonStyle())
+//                    .padding(.bottom, 10)
 
                     Spacer()
                 }
@@ -52,6 +79,16 @@ struct LandingPageView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.blue.opacity(0.4))
             .edgesIgnoringSafeArea(.all)
+            .navigationDestination(isPresented: $navigateToTasks) {
+                MyTaskPageView()
+            }
+            .navigationDestination(isPresented: $navigateToEvents) {
+                MyEventPageView()
+            }
+            .navigationDestination(isPresented: $navigateToNotes) {
+                MyNotePageView()
+            }
+
         }
     }
 }
