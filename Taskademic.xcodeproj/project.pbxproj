@@ -11,6 +11,7 @@
 		108AE2142BD217F700439B88 /* MyEventPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108AE2132BD217F700439B88 /* MyEventPageView.swift */; };
 		108AE2162BD222F600439B88 /* MyNotePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108AE2152BD222F600439B88 /* MyNotePageView.swift */; };
 		108AE2182BD223C200439B88 /* AddNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108AE2172BD223C200439B88 /* AddNote.swift */; };
+		10C7F6FA2BD9FF9B0084C217 /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7F6F92BD9FF9B0084C217 /* TaskManager.swift */; };
 		10EEBB262BD1EDCD0057B4A4 /* AddTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10EEBB252BD1EDCD0057B4A4 /* AddTask.swift */; };
 		58BC83712BD0441E004F4420 /* TaskademicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BC83702BD0441E004F4420 /* TaskademicApp.swift */; };
 		58BC83732BD0441E004F4420 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BC83722BD0441E004F4420 /* ContentView.swift */; };
@@ -25,6 +26,7 @@
 		108AE2132BD217F700439B88 /* MyEventPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEventPageView.swift; sourceTree = "<group>"; };
 		108AE2152BD222F600439B88 /* MyNotePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNotePageView.swift; sourceTree = "<group>"; };
 		108AE2172BD223C200439B88 /* AddNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNote.swift; sourceTree = "<group>"; };
+		10C7F6F92BD9FF9B0084C217 /* TaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
 		10EEBB252BD1EDCD0057B4A4 /* AddTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTask.swift; sourceTree = "<group>"; };
 		58BC836D2BD0441E004F4420 /* Taskademic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Taskademic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58BC83702BD0441E004F4420 /* TaskademicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskademicApp.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 				58BC83702BD0441E004F4420 /* TaskademicApp.swift */,
 				58BC83722BD0441E004F4420 /* ContentView.swift */,
 				58BC83872BD0FEA1004F4420 /* LandingPageView.swift */,
+				10C7F6F92BD9FF9B0084C217 /* TaskManager.swift */,
 				10EEBB252BD1EDCD0057B4A4 /* AddTask.swift */,
 				108AE2172BD223C200439B88 /* AddNote.swift */,
 				108AE2112BD20F7100439B88 /* AddEventView.swift */,
@@ -162,6 +165,7 @@
 			files = (
 				58BC838A2BD0FEDD004F4420 /* MyTaskPageView.swift in Sources */,
 				108AE2122BD20F7100439B88 /* AddEventView.swift in Sources */,
+				10C7F6FA2BD9FF9B0084C217 /* TaskManager.swift in Sources */,
 				10EEBB262BD1EDCD0057B4A4 /* AddTask.swift in Sources */,
 				108AE2162BD222F600439B88 /* MyNotePageView.swift in Sources */,
 				108AE2142BD217F700439B88 /* MyEventPageView.swift in Sources */,

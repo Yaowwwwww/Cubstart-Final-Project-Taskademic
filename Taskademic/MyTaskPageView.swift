@@ -15,14 +15,9 @@ struct MyTaskPageView: View {
         UINavigationBar.appearance().standardAppearance = appearance
     }
     
-    @State var tasks = [
-        (name: "Task 1", isStarred: true),
-        (name: "Task 2", isStarred: false),
-        (name: "Task 3", isStarred: true),
-        (name: "Task 4", isStarred: true),
-        (name: "Task 5", isStarred: false)
-    ]
+    
     @State private var navigateToAddTask = false
+    @EnvironmentObject var taskManager: TaskManager
     
     var body: some View {
         
@@ -30,12 +25,13 @@ struct MyTaskPageView: View {
             VStack {
                 // Task list section
                 List {
-                    ForEach(0..<tasks.count, id: \.self) { index in
+                    ForEach(0..<taskManager.tasks.count, id: \.self) { index in
                         HStack {
+                            
                             Image(systemName: "square")
-                            Text(tasks[index].name)
+                            Text(taskManager.tasks[index].name)
                             Spacer()
-                            if tasks[index].isStarred {
+                            if taskManager.tasks[index].isStarred {
                                 Image(systemName: "star.fill")
                                     .foregroundColor(.yellow)
                             }
@@ -55,6 +51,7 @@ struct MyTaskPageView: View {
                 HStack(spacing: 20) {
                     Button(action: {
                         // Handle previous page action
+                        //taskManager.tasks.remove(at: index)
                     }) {
                         Image(systemName: "chevron.left")
                             .padding()
@@ -93,6 +90,7 @@ struct MyTaskPageView: View {
                 // Delete all button
                 Button("Delete All") {
                     // Handle delete all action
+                    taskManager.tasks.removeAll()
                 }
                 .bold()
                 .frame(width: 340, height: 50)
@@ -116,6 +114,6 @@ struct MyTaskPageView: View {
 
 struct MyTaskPage_Previews: PreviewProvider {
     static var previews: some View {
-        MyTaskPageView()
+        MyTaskPageView().environmentObject(TaskManager())
     }
 }

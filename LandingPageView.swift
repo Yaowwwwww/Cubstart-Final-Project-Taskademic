@@ -108,6 +108,6 @@ struct MainButtonStyle: ButtonStyle {
 
 struct LandingPage_Previews: PreviewProvider {
     static var previews: some View {
-        LandingPageView()
+        LandingPageView().environmentObject(TaskManager())
     }
 }

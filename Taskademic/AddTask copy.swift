@@ -1,14 +1,24 @@
 import SwiftUI
 
 struct AddTaskView: View {
-    @EnvironmentObject var taskManager: TaskManager
+    init() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor(Color.white.opacity(0.5))
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+        appearance.largeTitleTextAttributes = [
+            .foregroundColor: UIColor.black,
+        ]
+            
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        UINavigationBar.appearance().standardAppearance = appearance
+    }
+    
     @State private var taskName: String = ""
     @State private var taskDescription: String = ""
-    @State private var navigateToMyTasks = false
-    @State private var isStarred: Bool = false
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             VStack {
                 Form {
                     Section(header: Text("Title").bold().foregroundColor(.black)) {
@@ -20,36 +30,34 @@ struct AddTaskView: View {
                             .frame(height: 200)
                     }
                     
-                    Section(header: Text("Priority").bold().foregroundColor(.black)) {
-                        Toggle(isOn: $isStarred) {
-                            Text("Important Task")
-                            
-                        }
-                    }
-                    
                     Section {
                         Button("Add Task") {
-                            taskManager.tasks.append((name: taskName, isStarred: isStarred, completed: false))
-                            self.navigateToMyTasks = true
+                            //Handle add task action
                         }
                     }.bold()
                         .frame(width: 500, height: 30)
                         .foregroundColor(.black)
                         .background(Color.white)
                         .cornerRadius(10)
-                    
                 }
             }.background(Color.blue)
                 .navigationBarTitle("Add Task", displayMode: .inline)
-                .navigationDestination(isPresented: $navigateToMyTasks) {
-                    MyTaskPageView()
+                .navigationBarItems(leading: Button(action: {
+
+                }) {
+                    Image(systemName: "arrow.left").foregroundColor(.black)
                 }
-            }
+                .foregroundColor(.blue))
         }
     }
+}
+                
+    
+
+
 
 struct AddTaskPageView: PreviewProvider {
     static var previews: some View {
-        AddTaskView().environmentObject(TaskManager())
+        AddTaskView()
     }
 }
