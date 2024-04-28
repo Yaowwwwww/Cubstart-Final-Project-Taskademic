@@ -4,12 +4,12 @@ struct AddEventView: View {
     
     @State private var eventName: String = ""
     @State private var dueDate: Date = Date()
-    @State private var location: String = ""
+    @State private var addedTime: Date = Date()
+    @State private var addedLocation: String = ""
     @State private var navigateToMyEvents = false
     @EnvironmentObject var taskManager: TaskManager
     @State private var isStarred: Bool = false
-    @State private var showAlert = false
-    @State private var errorMessage = ""
+    
     
     var body: some View {
         NavigationView {
@@ -23,17 +23,17 @@ struct AddEventView: View {
                         DatePicker("", selection: $dueDate, in: Date()..., displayedComponents: .date)
                     }
                     
+                    Section(header: Text("Time").bold().foregroundColor(.black)) {
+                        DatePicker("", selection: $addedTime, displayedComponents: .hourAndMinute)
+                                        }
+                    
                     Section(header: Text("Location").bold().foregroundColor(.black)) {
-                        TextField("Location", text: $location)
+                        TextField("Location", text: $addedLocation)
                     }
                     
                     Section {
                         Button("Add Event") {
-                            let formatter = DateFormatter()
-                            formatter.dateFormat = "yyyy-MM-dd"
-                            let selectedDateStr = formatter.string(from: dueDate)
-                            
-                            taskManager.events.append((name: eventName, isStarred:isStarred))
+                            taskManager.events.append((name: eventName, date:dueDate, time: addedTime, location: addedLocation, isStarred:isStarred))
                             navigateToMyEvents = true
                             
                         }

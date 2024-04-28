@@ -86,7 +86,7 @@ struct MyNotePageView: View {
                     .cornerRadius(10)
                     
                     Button(action: {
-                        // Handle next page action
+                        
                     }) {
                         Image(systemName: "chevron.right")
                             .padding()
@@ -100,9 +100,9 @@ struct MyNotePageView: View {
                 
                 Spacer()
                 Spacer()
-                // Delete all button
+                
                 Button("Delete All") {
-                    // Handle delete all action
+                    taskManager.notes.removeAll()
                 }
                 .bold()
                 .frame(width: 340, height: 50)
