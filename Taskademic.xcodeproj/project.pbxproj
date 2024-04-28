@@ -19,6 +19,7 @@
 		58BC83792BD04420004F4420 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58BC83782BD04420004F4420 /* Preview Assets.xcassets */; };
 		58BC83882BD0FEA1004F4420 /* LandingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BC83872BD0FEA1004F4420 /* LandingPageView.swift */; };
 		58BC838A2BD0FEDD004F4420 /* MyTaskPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BC83892BD0FEDD004F4420 /* MyTaskPageView.swift */; };
+		7DB38BC62BDEBB4C00157104 /* TaskDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB38BC52BDEBB4C00157104 /* TaskDetail.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		58BC83782BD04420004F4420 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		58BC83872BD0FEA1004F4420 /* LandingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LandingPageView.swift; path = ../LandingPageView.swift; sourceTree = "<group>"; };
 		58BC83892BD0FEDD004F4420 /* MyTaskPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTaskPageView.swift; sourceTree = "<group>"; };
+		7DB38BC52BDEBB4C00157104 /* TaskDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetail.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,7 @@
 				58BC83892BD0FEDD004F4420 /* MyTaskPageView.swift */,
 				108AE2132BD217F700439B88 /* MyEventPageView.swift */,
 				108AE2152BD222F600439B88 /* MyNotePageView.swift */,
+				7DB38BC52BDEBB4C00157104 /* TaskDetail.swift */,
 				58BC83742BD04420004F4420 /* Assets.xcassets */,
 				58BC83762BD04420004F4420 /* Taskademic.entitlements */,
 				58BC83772BD04420004F4420 /* Preview Content */,
@@ -168,6 +171,7 @@
 				10C7F6FA2BD9FF9B0084C217 /* TaskManager.swift in Sources */,
 				10EEBB262BD1EDCD0057B4A4 /* AddTask.swift in Sources */,
 				108AE2162BD222F600439B88 /* MyNotePageView.swift in Sources */,
+				7DB38BC62BDEBB4C00157104 /* TaskDetail.swift in Sources */,
 				108AE2142BD217F700439B88 /* MyEventPageView.swift in Sources */,
 				58BC83732BD0441E004F4420 /* ContentView.swift in Sources */,
 				58BC83882BD0FEA1004F4420 /* LandingPageView.swift in Sources */,
