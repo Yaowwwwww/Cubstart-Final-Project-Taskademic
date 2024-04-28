@@ -12,7 +12,7 @@ struct AddEventView: View {
     
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 Form {
                     Section(header: Text("Title").bold().foregroundColor(.black)) {
@@ -39,9 +39,7 @@ struct AddEventView: View {
                         }
                     }.frame(maxWidth: .infinity, alignment: .center)
                 }
-            }
-            .navigationBarTitle("Add Event", displayMode: .inline)
-            .background(Color.blue)
+            }.background(Color.blue).navigationBarTitle("Add Event", displayMode: .inline)
             .navigationDestination(isPresented: $navigateToMyEvents) {
                 MyEventPageView()
             }

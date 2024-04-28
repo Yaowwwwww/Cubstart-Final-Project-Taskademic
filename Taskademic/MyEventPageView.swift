@@ -23,13 +23,6 @@ struct MyEventPageView: View {
         UINavigationBar.appearance().standardAppearance = appearance
     }
     
-    @State var tasks = [
-        (name: "Event 1", isStarred: true),
-        (name: "Event 2", isStarred: false),
-        (name: "Event 3", isStarred: true),
-        (name: "Event 4", isStarred: true),
-        (name: "Event 5", isStarred: false)
-    ]
     @State private var navigateToAddEvent = false
     @EnvironmentObject var taskManager: TaskManager
     
