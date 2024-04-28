@@ -48,29 +48,6 @@ struct LandingPageView: View {
                         self.navigateToFavorites = true
                     }.buttonStyle(MainButtonStyle())
                         .padding(.bottom, 10).bold()
-//                    NavigationLink(destination: MyTaskPageView().navigationBarTitle("").navigationBarHidden(true)) {
-//                        Text("My Tasks")
-//                    }
-//                    .buttonStyle(MainButtonStyle())
-//                    .padding(.bottom, 10)
-//
-//                    NavigationLink(destination: MyTaskPageView().navigationBarTitle("").navigationBarHidden(true)) {
-//                        Text("My Notes")
-//                    }
-//                    .buttonStyle(MainButtonStyle())
-//                    .padding(.bottom, 10)
-//
-//                    NavigationLink(destination: MyTaskPageView().navigationBarTitle("").navigationBarHidden(true)) {
-//                        Text("My Events")
-//                    }
-//                    .buttonStyle(MainButtonStyle())
-//                    .padding(.bottom, 10)
-//
-//                    NavigationLink(destination: MyTaskPageView().navigationBarTitle("").navigationBarHidden(true)) {
-//                        Text("Favorite List")
-//                    }
-//                    .buttonStyle(MainButtonStyle())
-//                    .padding(.bottom, 10)
 
                     Spacer()
                 }

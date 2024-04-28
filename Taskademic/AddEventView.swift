@@ -14,6 +14,8 @@ struct AddEventView: View {
     @State private var dueDate: String = ""
     @State private var location: String = ""
     @State private var navigateToMyEvents = false
+    @EnvironmentObject var taskManager: TaskManager
+    @State private var isStarred: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -35,6 +37,7 @@ struct AddEventView: View {
                     Section {
                         Button("Add Event") {
                             //Handle add task action
+                            taskManager.events.append((name: eventName, isStarred: isStarred))
                             self.navigateToMyEvents = true
                         }
                     }.bold()
@@ -57,6 +60,6 @@ struct AddEventView: View {
 
 struct AddEventViewPreview: PreviewProvider {
     static var previews: some View {
-        AddEventView()
+        AddEventView().environmentObject(TaskManager())
     }
 }

@@ -31,6 +31,7 @@ struct MyEventPageView: View {
         (name: "Event 5", isStarred: false)
     ]
     @State private var navigateToAddEvent = false
+    @EnvironmentObject var taskManager: TaskManager
     
     var body: some View {
         
@@ -38,12 +39,12 @@ struct MyEventPageView: View {
             VStack {
                 // Task list section
                 List {
-                    ForEach(0..<tasks.count, id: \.self) { index in
+                    ForEach(0..<taskManager.events.count, id: \.self) { index in
                         HStack {
                            
-                            Text(tasks[index].name)
+                            Text(taskManager.events[index].name)
                             Spacer()
-                            if tasks[index].isStarred {
+                            if taskManager.events[index].isStarred {
                                 Image(systemName: "star.fill")
                                     .foregroundColor(.yellow)
                             }
@@ -124,6 +125,6 @@ struct MyEventPageView: View {
 
 struct MyEventPage_Previews: PreviewProvider {
     static var previews: some View {
-        MyEventPageView()
+        MyEventPageView().environmentObject(TaskManager())
     }
 }
