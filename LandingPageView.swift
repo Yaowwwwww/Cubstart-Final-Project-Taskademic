@@ -43,7 +43,7 @@ struct LandingPageView: View {
                     }.buttonStyle(MainButtonStyle())
                         .padding(.bottom, 10).bold()
                     
-                    Button("My Favorites") {
+                    Button("High Priorities") {
                         //Handle add task action
                         self.navigateToFavorites = true
                     }.buttonStyle(MainButtonStyle())
