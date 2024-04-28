@@ -22,16 +22,18 @@ struct AddNoteView: View {
         UINavigationBar.appearance().standardAppearance = appearance
     }
     
-    @State private var taskName: String = ""
+    @EnvironmentObject var taskManager: TaskManager
+    @State private var noteName: String = ""
     @State private var taskDescription: String = ""
-    @State private var navigateToMyTasks = false
+    @State private var navigateToMyNotes = false
+    @State private var isStarred: Bool = false
     
     var body: some View {
         NavigationStack{
             VStack {
                 Form {
                     Section(header: Text("Title").bold().foregroundColor(.black)) {
-                        TextField("Title", text: $taskName)
+                        TextField("Title", text: $noteName)
                     }
                     
                     Section(header: Text("Description").bold().foregroundColor(.black)) {
@@ -39,10 +41,18 @@ struct AddNoteView: View {
                             .frame(height: 200)
                     }
                     
+                    Section(header: Text("Priority").bold().foregroundColor(.black)) {
+                        Toggle(isOn: $isStarred) {
+                            Text("Important Note")
+                            
+                        }
+                    }
+                    
                     Section {
                         Button("Add Note") {
                             //Handle add task action
-                            self.navigateToMyTasks = true
+                            taskManager.notes.append((name: noteName, isStarred: isStarred))
+                            self.navigateToMyNotes = true
                         }
                     }.bold()
                         .frame(width: 500, height: 30)
@@ -53,8 +63,8 @@ struct AddNoteView: View {
                 }
             }.background(Color.blue)
                 .navigationBarTitle("Add Note", displayMode: .inline)
-                .navigationDestination(isPresented: $navigateToMyTasks) {
-                    MyTaskPageView()
+                .navigationDestination(isPresented: $navigateToMyNotes) {
+                    MyNotePageView()
                 }
             }
         }
@@ -67,6 +77,6 @@ struct AddNoteView: View {
 
 struct AddNotePageView: PreviewProvider {
     static var previews: some View {
-        AddNoteView()
+        AddNoteView().environmentObject(TaskManager())
     }
 }

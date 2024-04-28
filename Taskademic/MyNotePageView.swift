@@ -32,6 +32,7 @@ struct MyNotePageView: View {
         (name: "Note 5", isStarred: false)
     ]
     @State private var navigateToAddNote = false
+    @EnvironmentObject var taskManager: TaskManager
     
     var body: some View {
         
@@ -39,12 +40,12 @@ struct MyNotePageView: View {
             VStack {
                 // Task list section
                 List {
-                    ForEach(0..<tasks.count, id: \.self) { index in
+                    ForEach(0..<taskManager.notes.count, id: \.self) { index in
                         HStack {
                            
-                            Text(tasks[index].name)
+                            Text(taskManager.notes[index].name)
                             Spacer()
-                            if tasks[index].isStarred {
+                            if taskManager.notes[index].isStarred {
                                 Image(systemName: "star.fill")
                                     .foregroundColor(.yellow)
                             }
@@ -113,7 +114,7 @@ struct MyNotePageView: View {
                 Spacer()
             }
             .background(Color.blue.opacity(0.4))
-            .navigationBarTitle("My Events", displayMode: .inline)
+            .navigationBarTitle("My Notes", displayMode: .inline)
             .navigationBarItems(trailing: Button("Save") {
             }
             .foregroundColor(.blue))
@@ -125,6 +126,6 @@ struct MyNotePageView: View {
 
 struct MyNotePage_Previews: PreviewProvider {
     static var previews: some View {
-        MyNotePageView()
+        MyNotePageView().environmentObject(TaskManager())
     }
 }
