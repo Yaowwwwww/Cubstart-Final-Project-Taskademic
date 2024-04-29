@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct TaskDetail: View {
+struct EventDetail: View {
     @State private var isFavorite = false
 
     init() {
@@ -59,7 +59,7 @@ struct TaskDetail: View {
             }.padding()
         }
         .background(Color.blue.opacity(0.4))
-        .navigationTitle("Task 1")
+        .navigationTitle("Event 1")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(leading: Button(action: {
             // Your code for back action goes here
@@ -70,7 +70,7 @@ struct TaskDetail: View {
     }
 }
 
-struct CardView: View {
+struct CardView12: View {
     var title: String
     var description: String
 
@@ -94,12 +94,13 @@ struct CardView: View {
     }
 }
 
-struct TaskDetail_Previews: PreviewProvider {
+struct EventDetail_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            TaskDetail()
+            EventDetail()
         }
     }
 }
+
 
 
