@@ -1,3 +1,10 @@
+//
+//  NoteDetail.swift
+//  Taskademic
+//
+//  Created by zhenwang on 4/17/24.
+//
+
 import SwiftUI
 
 struct MyTaskPageView: View {
