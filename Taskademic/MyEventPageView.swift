@@ -23,14 +23,8 @@ struct MyEventPageView: View {
         UINavigationBar.appearance().standardAppearance = appearance
     }
     
-    @State var tasks = [
-        (name: "Event 1", isStarred: true),
-        (name: "Event 2", isStarred: false),
-        (name: "Event 3", isStarred: true),
-        (name: "Event 4", isStarred: true),
-        (name: "Event 5", isStarred: false)
-    ]
     @State private var navigateToAddEvent = false
+    @EnvironmentObject var taskManager: TaskManager
     
     var body: some View {
         
@@ -38,16 +32,18 @@ struct MyEventPageView: View {
             VStack {
                 // Task list section
                 List {
-                    ForEach(0..<tasks.count, id: \.self) { index in
+                    ForEach(0..<taskManager.events.count, id: \.self) { index in
                         HStack {
                            
-                            Text(tasks[index].name)
+                            eventDetailView(for: (name: taskManager.events[index].name, date: taskManager.events[index].date, time: taskManager.events[index].time, location: taskManager.events[index].location, isStarred: taskManager.events[index].isStarred))
+
                             Spacer()
-                            if tasks[index].isStarred {
+                            if taskManager.events[index].isStarred {
                                 Image(systemName: "star.fill")
                                     .foregroundColor(.yellow)
                             }
                         }
+                        
                         .bold()
                         .padding()
                         .background(Color.white)
@@ -98,9 +94,9 @@ struct MyEventPageView: View {
                 
                 Spacer()
                 Spacer()
-                // Delete all button
+                
                 Button("Delete All") {
-                    // Handle delete all action
+                    taskManager.events.removeAll()
                 }
                 .bold()
                 .frame(width: 340, height: 50)
@@ -122,8 +118,36 @@ struct MyEventPageView: View {
     }
 }
 
+private func eventDetailView(for event: (name: String, date: Date, time:Date, location: String, isStarred: Bool)) -> some View {
+        VStack(alignment: .leading, spacing: 5) {
+            Text(event.name)
+            HStack(){
+                Text(formatDate(event.date))
+                               .foregroundColor(.gray)
+                               .font(.caption)
+                Text(formatTime(event.time))
+                               .foregroundColor(.gray)
+                               .font(.caption)
+            }
+            Text(event.location).foregroundColor(.gray)
+                .font(.caption)
+        }
+    }
+
+private func formatDate(_ date: Date) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "MMM d, yyyy"
+    return dateFormatter.string(from: date)
+}
+
+private func formatTime(_ time: Date) -> String {
+    let timeFormatter = DateFormatter()
+    timeFormatter.dateFormat = "h:mm a"
+    return timeFormatter.string(from: time)
+}
+
 struct MyEventPage_Previews: PreviewProvider {
     static var previews: some View {
-        MyEventPageView()
+        MyEventPageView().environmentObject(TaskManager())
     }
 }

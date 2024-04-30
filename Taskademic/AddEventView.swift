@@ -1,19 +1,15 @@
-//
-//  AddEventView.swift
-//  Taskademic
-//
-//  Created by Dina Khatri on 4/18/24.
-//
-
-import Foundation
 import SwiftUI
 
 struct AddEventView: View {
     
     @State private var eventName: String = ""
-    @State private var dueDate: String = ""
-    @State private var location: String = ""
+    @State private var dueDate: Date = Date()
+    @State private var addedTime: Date = Date()
+    @State private var addedLocation: String = ""
     @State private var navigateToMyEvents = false
+    @EnvironmentObject var taskManager: TaskManager
+    @State private var isStarred: Bool = false
+    
     
     var body: some View {
         NavigationStack {
@@ -23,40 +19,36 @@ struct AddEventView: View {
                         TextField("Title", text: $eventName)
                     }
                     
-                    Section(header: Text("Due Date").bold().foregroundColor(.black)) {
-                        TextField("Please enter the due date",text: $dueDate)
-                            
+                    Section(header: Text("Date").bold().foregroundColor(.black)) {
+                        DatePicker("", selection: $dueDate, in: Date()..., displayedComponents: .date)
                     }
                     
-                    Section(header: Text("location").bold().foregroundColor(.black)) {
-                        TextField("Location",text: $location)
-                            
+                    Section(header: Text("Time").bold().foregroundColor(.black)) {
+                        DatePicker("", selection: $addedTime, displayedComponents: .hourAndMinute)
+                                        }
+                    
+                    Section(header: Text("Location").bold().foregroundColor(.black)) {
+                        TextField("Location", text: $addedLocation)
                     }
+                    
                     Section {
                         Button("Add Event") {
-                            //Handle add task action
-                            self.navigateToMyEvents = true
+                            taskManager.events.append((name: eventName, date:dueDate, time: addedTime, location: addedLocation, isStarred:isStarred))
+                            navigateToMyEvents = true
+                            
                         }
-                    }.bold()
-                        .frame(width: 500, height: 30)
-                        .foregroundColor(.black)
-                        .background(Color.white)
-                        .cornerRadius(10)
+                    }.frame(maxWidth: .infinity, alignment: .center)
                 }
-            }.background(Color.blue)
-                .navigationBarTitle("Add Event", displayMode: .inline)
-                .navigationDestination(isPresented: $navigateToMyEvents) {
-                    MyEventPageView()
-                }
+            }.background(Color.blue).navigationBarTitle("Add Event", displayMode: .inline)
+            .navigationDestination(isPresented: $navigateToMyEvents) {
+                MyEventPageView()
             }
         }
     }
-    
+}
 
-
-
-struct AddEventViewPreview: PreviewProvider {
+struct AddEventView_Previews: PreviewProvider {
     static var previews: some View {
-        AddEventView()
+        AddEventView().environmentObject(TaskManager())
     }
 }
