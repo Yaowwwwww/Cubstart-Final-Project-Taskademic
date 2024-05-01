@@ -57,15 +57,17 @@ struct LandingPageView: View {
             .background(Color.blue.opacity(0.4))
             .edgesIgnoringSafeArea(.all)
             .navigationDestination(isPresented: $navigateToTasks) {
-                MyTaskPageView()
+                MyTaskPageView(navigateToTasks: $navigateToTasks)
             }
-            .navigationDestination(isPresented: $navigateToEvents) {
-                MyEventPageView()
-            }
+            
             .navigationDestination(isPresented: $navigateToNotes) {
                 MyNotePageView()
             }
-
+            
+            .navigationDestination(isPresented: $navigateToEvents) {
+                MyEventPageView()
+            }
+            
         }
     }
 }

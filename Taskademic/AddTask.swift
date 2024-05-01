@@ -2,12 +2,14 @@ import SwiftUI
 
 struct AddTaskView: View {
     @EnvironmentObject var taskManager: TaskManager
+    @Environment(\.presentationMode) var presentationMode
     @State private var taskName: String = ""
     @State private var taskDescription: String = ""
     @State private var navigateToMyTasks = false
     @State private var isStarred: Bool = false
-    
+
     var body: some View {
+        
         NavigationStack {
             VStack {
                 Form {
@@ -23,30 +25,55 @@ struct AddTaskView: View {
                     Section(header: Text("Priority").bold().foregroundColor(.black)) {
                         Toggle(isOn: $isStarred) {
                             Text("Important Task")
-                            
                         }
                     }
                     
                     Section {
                         Button("Add Task") {
-                            taskManager.tasks.append((name: taskName, isStarred: isStarred, completed: false))
+                            taskManager.tasks.append((name: taskName, description: taskDescription, isStarred: isStarred, isSelected: false))
                             self.navigateToMyTasks = true
                         }
-                    }.bold()
+                        .bold()
                         .frame(width: 500, height: 30)
                         .foregroundColor(.black)
-                        .background(Color.white)
                         .cornerRadius(10)
-                    
+                    }
                 }
-            }.background(Color.blue)
-                .navigationBarTitle("Add Task", displayMode: .inline)
-                .navigationDestination(isPresented: $navigateToMyTasks) {
-                    MyTaskPageView()
+            }
+            .background(Color.blue)
+            .navigationBarTitle("Add Task", displayMode: .inline)
+            .navigationDestination(isPresented: $navigateToMyTasks) {
+                MyTaskPageView(navigateToTasks: $navigateToMyTasks)
+            }
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Image(systemName: "arrow.left")
+                            .foregroundColor(.blue)
+                    }
                 }
             }
         }
+        .onAppear {
+            configureNavigationBar()
+        }
+        
     }
+
+    private func configureNavigationBar() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor(Color.blue.opacity(0.3))
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.blue]
+        
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        UINavigationBar.appearance().standardAppearance = appearance
+    }
+}
 
 struct AddTaskPageView: PreviewProvider {
     static var previews: some View {

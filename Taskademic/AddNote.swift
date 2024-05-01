@@ -50,8 +50,7 @@ struct AddNoteView: View {
                     
                     Section {
                         Button("Add Note") {
-                            //Handle add task action
-                            taskManager.notes.append((name: noteName, isStarred: isStarred))
+                            taskManager.notes.append((name: noteName,description: taskDescription, isStarred: isStarred, isSelected: false))
                             self.navigateToMyNotes = true
                         }
                     }.bold()

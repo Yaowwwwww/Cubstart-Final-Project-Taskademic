@@ -1,15 +1,13 @@
-
-
 import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        LandingPageView()
+        LandingPageView().environmentObject(TaskManager())
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        LandingPageView().environmentObject(TaskManager())
     }
 }

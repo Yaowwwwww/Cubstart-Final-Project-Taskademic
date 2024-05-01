@@ -8,96 +8,86 @@
 import SwiftUI
 
 struct MyTaskPageView: View {
+    @Binding var navigateToTasks: Bool
     
-    init() {
+    private func configureNavigationBar() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = UIColor(Color.white.opacity(0.5))
         appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
-        appearance.largeTitleTextAttributes = [
-            .foregroundColor: UIColor.black,
-        ]
-            
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+        
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
         UINavigationBar.appearance().standardAppearance = appearance
     }
     
-    
     @State private var navigateToAddTask = false
+    @State private var navigateToTaskDetail = false
     @EnvironmentObject var taskManager: TaskManager
     
+    @State private var selectedTask: (name: String, description: String, isStarred: Bool, isSelected: Bool)?
+    
     var body: some View {
-        
+    
         NavigationStack {
             VStack {
-                // Task list section
                 List {
                     ForEach(0..<taskManager.tasks.count, id: \.self) { index in
-                        HStack {
-                            
-                            Image(systemName: "square")
-                            Text(taskManager.tasks[index].name)
-                            Spacer()
-                            if taskManager.tasks[index].isStarred {
-                                Image(systemName: "star.fill")
-                                    .foregroundColor(.yellow)
+                        Button(action: {
+                            self.selectedTask = taskManager.tasks[index]
+                            self.navigateToTaskDetail = true
+                        }) {
+                            HStack {
+                                Button(action: {
+                                    self.taskManager.tasks[index].isSelected.toggle()
+                                }) {
+                                    Image(systemName: taskManager.tasks[index].isSelected ? "checkmark.square.fill" : "square")
+                                }
+                                
+                                Text(taskManager.tasks[index].name)
+                                Spacer()
+                                if taskManager.tasks[index].isStarred {
+                                    Image(systemName: "star.fill")
+                                        .foregroundColor(.yellow)
+                                        .frame(width: 10, height: 20)
+                                }
+                                
                             }
+                            .bold()
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(10)
+                            .shadow(radius: 1)
                         }
-                        .bold()
-                        .padding()
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .shadow(radius: 1)
                         .listRowBackground(Color.blue.opacity(0))
                     }
                 }
                 .padding(.top, 10)
                 .listStyle(PlainListStyle())
                 
-                
-                HStack(spacing: 20) {
-                    Button(action: {
-                        // Handle previous page action
-                        //taskManager.tasks.remove(at: index)
-                    }) {
-                        Image(systemName: "chevron.left")
-                            .padding()
-                            .frame(width: 50, height: 47)
-                            .background(Color.white.opacity(0.5))
-                            .cornerRadius(10)
+                Button(action: {
+                    for index in 0..<taskManager.tasks.count {
+                        if taskManager.tasks[index].isSelected {
+                            taskManager.tasks[index].isStarred.toggle()
+                        }
                     }
-                    
-                    
-                    Button("Add Task") {
-                        // Handle add task action
-                        self.navigateToAddTask = true
-                    }
-                    .bold()
-                    .padding()
-                    .frame(width: 200, height: 50)
-                    .foregroundColor(.black)
-                    .background(Color.white)
-                    .cornerRadius(10)
-                    
-                    Button(action: {
-                        // Handle next page action
-                    }) {
-                        Image(systemName: "chevron.right")
-                            .padding()
-                            .frame(width: 50, height: 47)
-                            .background(Color.white.opacity(0.5))
-                            .cornerRadius(10)
-                    }
+                }){
+                    Text("Mark/Unmark Selected")
                 }
-                .padding(.horizontal)
-                
+                .bold()
+                .padding()
+                .frame(width: 340, height: 50)
+                .foregroundColor(.black)
+                .background(Color.white)
+                .cornerRadius(10)
                 
                 Spacer()
                 Spacer()
-                // Delete all button
-                Button("Delete All") {
-                    // Handle delete all action
-                    taskManager.tasks.removeAll()
+                
+                Button (action: {
+                    taskManager.removeSelectedTasks()
+                }){
+                    Text("Delete Selected")
                 }
                 .bold()
                 .frame(width: 340, height: 50)
@@ -110,17 +100,30 @@ struct MyTaskPageView: View {
             }
             .background(Color.blue.opacity(0.4))
             .navigationBarTitle("My Tasks", displayMode: .inline)
-            .navigationBarItems(trailing: Button("Save") {
+            .navigationBarItems(trailing: Button("Add Task") {
+                navigateToAddTask = true
             }
             .foregroundColor(.blue))
             .navigationDestination(isPresented: $navigateToAddTask) {
                 AddTaskView()}
+            .navigationDestination(isPresented: $navigateToTaskDetail) {
+                if let task = selectedTask {
+                    TaskDetail(task: task)
+                }
+            }
+            .onAppear {
+                navigateToTasks = false
+            }
+            .onAppear {
+                configureNavigationBar()
+            }
         }
+        
     }
 }
 
 struct MyTaskPage_Previews: PreviewProvider {
     static var previews: some View {
-        MyTaskPageView().environmentObject(TaskManager())
+        LandingPageView().environmentObject(TaskManager())
     }
 }

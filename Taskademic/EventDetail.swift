@@ -26,8 +26,8 @@ struct EventDetail: View {
 
     var body: some View {
         VStack {
-            CardView(title: "Task 1", description: "Some Description...")
-                .padding()
+//            CardView(title: "Task 1", description: "Some Description...")
+//                .padding()
 
             Spacer()
 

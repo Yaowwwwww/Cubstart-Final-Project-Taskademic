@@ -5,8 +5,6 @@
 //  Created by Dina Khatri on 4/18/24.
 
 
-
-import Foundation
 import SwiftUI
 
 struct MyNotePageView: View {
@@ -24,85 +22,71 @@ struct MyNotePageView: View {
         UINavigationBar.appearance().standardAppearance = appearance
     }
     
-    @State var tasks = [
-        (name: "Note 1", isStarred: true),
-        (name: "Note 2", isStarred: false),
-        (name: "Note 3", isStarred: true),
-        (name: "Note 4", isStarred: true),
-        (name: "Note 5", isStarred: false)
-    ]
+    
     @State private var navigateToAddNote = false
+    @State private var navigateToNoteDetail = false
     @EnvironmentObject var taskManager: TaskManager
     
     var body: some View {
         
         NavigationStack {
             VStack {
-                // Task list section
                 List {
                     ForEach(0..<taskManager.notes.count, id: \.self) { index in
-                        HStack {
-                           
-                            Text(taskManager.notes[index].name)
-                            Spacer()
-                            if taskManager.notes[index].isStarred {
-                                Image(systemName: "star.fill")
-                                    .foregroundColor(.yellow)
+                        Button(action: {
+//                            self.navigateToTaskDetail = true
+                        }) {
+                            HStack {
+                                Button(action: {
+                                    self.taskManager.notes[index].isSelected.toggle()
+                                }) {
+                                    Image(systemName: taskManager.notes[index].isSelected ? "checkmark.square.fill" : "square")
+                                }
+                                
+                                Text(taskManager.notes[index].name)
+                                Spacer()
+                                if taskManager.notes[index].isStarred {
+                                    Image(systemName: "star.fill")
+                                        .foregroundColor(.yellow)
+                                        .frame(width: 10, height: 20)
+                                }
+                                
                             }
+                            .bold()
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(10)
+                            .shadow(radius: 1)
                         }
-                        .bold()
-                        .padding()
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .shadow(radius: 1)
                         .listRowBackground(Color.blue.opacity(0))
                     }
                 }
                 .padding(.top, 10)
                 .listStyle(PlainListStyle())
                 
-                
-                HStack(spacing: 20) {
-                    Button(action: {
-                        // Handle previous page action
-                    }) {
-                        Image(systemName: "chevron.left")
-                            .padding()
-                            .frame(width: 50, height: 47)
-                            .background(Color.white.opacity(0.5))
-                            .cornerRadius(10)
+                Button(action: {
+                    for index in 0..<taskManager.notes.count {
+                        if taskManager.notes[index].isSelected {
+                            taskManager.notes[index].isStarred.toggle()
+                        }
                     }
-                    
-                    
-                    Button("Add Note") {
-                        // Handle add task action
-                        self.navigateToAddNote = true
-                    }
-                    .bold()
-                    .padding()
-                    .frame(width: 200, height: 50)
-                    .foregroundColor(.black)
-                    .background(Color.white)
-                    .cornerRadius(10)
-                    
-                    Button(action: {
-                        
-                    }) {
-                        Image(systemName: "chevron.right")
-                            .padding()
-                            .frame(width: 50, height: 47)
-                            .background(Color.white.opacity(0.5))
-                            .cornerRadius(10)
-                    }
+                }){
+                    Text("Mark/Unmark Selected")
                 }
-                .padding(.horizontal)
-                
+                .bold()
+                .padding()
+                .frame(width: 340, height: 50)
+                .foregroundColor(.black)
+                .background(Color.white)
+                .cornerRadius(10)
                 
                 Spacer()
                 Spacer()
                 
-                Button("Delete All") {
-                    taskManager.notes.removeAll()
+                Button (action: {
+                    taskManager.removeSelectedNotes()
+                }){
+                    Text("Delete Selected")
                 }
                 .bold()
                 .frame(width: 340, height: 50)
@@ -115,12 +99,16 @@ struct MyNotePageView: View {
             }
             .background(Color.blue.opacity(0.4))
             .navigationBarTitle("My Notes", displayMode: .inline)
-            .navigationBarItems(trailing: Button("Save") {
+            .navigationBarItems(trailing: Button("Add Note") {
+                navigateToAddNote = true
             }
             .foregroundColor(.blue))
             .navigationDestination(isPresented: $navigateToAddNote) {
                 AddNoteView()}
-        }
+            }
+            .onAppear {
+                navigateToAddNote = false
+            }
     }
 }
 

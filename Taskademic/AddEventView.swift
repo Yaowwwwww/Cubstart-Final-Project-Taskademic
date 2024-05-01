@@ -33,9 +33,8 @@ struct AddEventView: View {
                     
                     Section {
                         Button("Add Event") {
-                            taskManager.events.append((name: eventName, date:dueDate, time: addedTime, location: addedLocation, isStarred:isStarred))
+                            taskManager.events.append((name: eventName, date:dueDate, time: addedTime, location: addedLocation, isStarred:isStarred, isSelected: false))
                             navigateToMyEvents = true
-                            
                         }
                     }.frame(maxWidth: .infinity, alignment: .center)
                 }

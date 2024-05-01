@@ -1,17 +1,11 @@
-//
-//  NoteDetail.swift
-//  Taskademic
-//
-//  Created by zhenwang on 4/28/24.
-//
-
-
 import SwiftUI
 
 struct TaskDetail: View {
-    @State private var isFavorite = false
+    var task: (name: String, description: String, isStarred: Bool, isSelected: Bool)
+    @State private var navigateToTasks = false
 
-    init() {
+    init(task: (name: String, description: String, isStarred: Bool, isSelected: Bool)) {
+        self.task = task
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = UIColor(Color.white.opacity(0.5))
@@ -23,83 +17,46 @@ struct TaskDetail: View {
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
         UINavigationBar.appearance().standardAppearance = appearance
     }
-
+    
     var body: some View {
-        VStack {
-            CardView(title: "Task 1", description: "Some Description...")
-                .padding()
-
-            Spacer()
-
-            HStack(spacing: 20) {
-                Button(action: {
-                    // Your code for deleting the note goes here
-                }) {
-                    Text("Delete Note")
-                        .foregroundColor(.black)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .shadow(radius: 2)
-                }
-
-                Button(action: {
-                    self.isFavorite.toggle()
-                    // Your code for marking/unmarking as favorite goes here
-                }) {
-                    Text(isFavorite ? "Unmark as Favorite" : "Mark as Favorite")
-                        .foregroundColor(.black)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .shadow(radius: 2)
-                }
-            }.padding()
-        }
-        .background(Color.blue.opacity(0.4))
-        .navigationTitle("Task 1")
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarItems(leading: Button(action: {
-            // Your code for back action goes here
-        }) {
-            Image(systemName: "arrow.left")
-                .foregroundColor(.black)
-        })
-    }
-}
-
-struct CardView: View {
-    var title: String
-    var description: String
-
-    var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 15, style: .continuous)
-                .fill(Color.white.opacity(0.6))
-                .shadow(radius: 10)
-
+        ScrollView {
             VStack(alignment: .leading) {
-                Text(title)
-                    .font(.headline)
-                    .padding([.top, .leading, .trailing])
-                
-                Text(description)
-                    .font(.subheadline)
-                    .padding([.leading, .bottom, .trailing])
+                Text(task.description)
+                    .font(.system(size: 20, design: .rounded))
+                    .padding()
+            }
+            .background(
+                RoundedRectangle(cornerRadius: 15, style: .continuous)
+                    .fill(Color.white.opacity(0.8))
+                    .shadow(radius: 5)
+            )
+            .padding()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.blue.opacity(0.4))
+        .navigationTitle(task.name)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    navigateToTasks = true
+                }) {
+                    Image(systemName: "arrow.left")
+                        .foregroundColor(.blue) // Set the color of the arrow to blue
+                }
             }
         }
-        .frame(height: 600)
+        .navigationBarBackButtonHidden(true)
+        .navigationDestination(isPresented: $navigateToTasks) {
+            MyTaskPageView(navigateToTasks: $navigateToTasks)
+        }
     }
 }
 
 struct TaskDetail_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            TaskDetail()
+            TaskDetail(task: (name: "Example Task", description: "This ", isStarred: true, isSelected: false))
         }
     }
 }
-
-
