@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct MyTaskPageView: View {
-    @Binding var navigateToTasks: Bool
     
     private func configureNavigationBar() {
         let appearance = UINavigationBarAppearance()
@@ -24,6 +23,8 @@ struct MyTaskPageView: View {
     @State private var navigateToAddTask = false
     @State private var navigateToTaskDetail = false
     @EnvironmentObject var taskManager: TaskManager
+    @Environment(\.presentationMode) var presentationMode
+    @State private var showingSheet = false
     
     @State private var selectedTask: (name: String, description: String, isStarred: Bool, isSelected: Bool)?
     
@@ -111,9 +112,18 @@ struct MyTaskPageView: View {
                     TaskDetail(task: task)
                 }
             }
-            .onAppear {
-                navigateToTasks = false
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Image(systemName: "arrow.left")
+                            .foregroundColor(.blue) // Set the color of the arrow to blue
+                    }
+                }
             }
+            
             .onAppear {
                 configureNavigationBar()
             }

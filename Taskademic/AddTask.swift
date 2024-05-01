@@ -43,19 +43,9 @@ struct AddTaskView: View {
             .background(Color.blue)
             .navigationBarTitle("Add Task", displayMode: .inline)
             .navigationDestination(isPresented: $navigateToMyTasks) {
-                MyTaskPageView(navigateToTasks: $navigateToMyTasks)
+                MyTaskPageView()
             }
             .navigationBarBackButtonHidden(true)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(action: {
-                        presentationMode.wrappedValue.dismiss()
-                    }) {
-                        Image(systemName: "arrow.left")
-                            .foregroundColor(.blue)
-                    }
-                }
-            }
         }
         .onAppear {
             configureNavigationBar()
@@ -66,7 +56,7 @@ struct AddTaskView: View {
     private func configureNavigationBar() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor(Color.blue.opacity(0.3))
+        appearance.backgroundColor = UIColor(Color.white)
         appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
         appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.blue]
         

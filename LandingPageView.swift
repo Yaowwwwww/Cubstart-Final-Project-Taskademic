@@ -1,79 +1,56 @@
 import SwiftUI
 
 struct LandingPageView: View {
-    @State private var navigateToTasks = false
-    @State private var navigateToNotes = false
-    @State private var navigateToEvents = false
-    @State private var navigateToFavorites = false
     var body: some View {
         NavigationStack {
             VStack {
+                Spacer()
+                Image("TaskademiclLogo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 275, height: 280)
+                    .padding(.top, 10)
+
+                Text("Taskademic")
+                    .font(.largeTitle)
+                    .bold()
+                    .padding(.top, 10)
+                    .padding(.bottom, 2)
+
+                Text("Organize, Optimize, Achieve")
+                    .padding(.bottom, 30)
+                    .foregroundColor(Color.init(red: 0, green: 0, blue: 0))
+
                 VStack {
-                    Image("TaskademiclLogo")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 275, height: 280)
-                        .padding(.top, 10)
-
-                    Text("Taskademic")
-                        .font(.largeTitle)
-                        .bold()
-                        .padding(.top, 10)
-                        .padding(.bottom, 2)
-
-                    Text("Organize, Optimize, Achieve")
-                        .padding(.bottom, 30)
-                        .foregroundColor(Color.init(red: 0, green: 0, blue: 0))
-                    
-                    Button("My Tasks") {
-                        //Handle add task action
-                        self.navigateToTasks = true
-                    }.buttonStyle(MainButtonStyle())
-                        .padding(.bottom, 10).bold()
-                    
-                    Button("My Notes") {
-                        //Handle add task action
-                        self.navigateToNotes = true
-                    }.buttonStyle(MainButtonStyle())
-                        .padding(.bottom, 10).bold()
-                    
-                    Button("My Events") {
-                        //Handle add task action
-                        self.navigateToEvents = true
-                    }.buttonStyle(MainButtonStyle())
-                        .padding(.bottom, 10).bold()
-                    
-                    Button("High Priorities") {
-                        //Handle add task action
-                        self.navigateToFavorites = true
-                    }.buttonStyle(MainButtonStyle())
+                    NavigationLink("My Tasks", destination: MyTaskPageView())
+                        .buttonStyle(MainButtonStyle())
                         .padding(.bottom, 10).bold()
 
-                    Spacer()
+                    NavigationLink("My Notes", destination: MyNotePageView())
+                        .buttonStyle(MainButtonStyle())
+                        .padding(.bottom, 10).bold()
+
+                    NavigationLink("My Events", destination: MyEventPageView())
+                        .buttonStyle(MainButtonStyle())
+                        .padding(.bottom, 10).bold()
+
+//                    NavigationLink("High Priorities", destination: MyFavoritesPageView())
+//                        .buttonStyle(MainButtonStyle())
+//                        .padding(.bottom, 10).bold()
                 }
-                .offset(y: 80)
+
+                Spacer()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.blue.opacity(0.4))
             .edgesIgnoringSafeArea(.all)
-            .navigationDestination(isPresented: $navigateToTasks) {
-                MyTaskPageView(navigateToTasks: $navigateToTasks)
-            }
-            
-            .navigationDestination(isPresented: $navigateToNotes) {
-                MyNotePageView()
-            }
-            
-            .navigationDestination(isPresented: $navigateToEvents) {
-                MyEventPageView()
-            }
             
         }
     }
 }
 
 struct MainButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
+    func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
             .frame(maxWidth: .infinity)
             .padding()
@@ -85,7 +62,9 @@ struct MainButtonStyle: ButtonStyle {
     }
 }
 
-struct LandingPage_Previews: PreviewProvider {
+// Assuming MyTaskPageView, MyNotePageView, MyEventPageView, and MyFavoritesPageView are properly defined somewhere else.
+
+struct LandingPageView_Previews: PreviewProvider {
     static var previews: some View {
         LandingPageView().environmentObject(TaskManager())
     }
