@@ -1,51 +1,45 @@
-//
-//  MyNotePageView.swift
-//  Taskademic
-//
-//  Created by Dina Khatri on 4/18/24.
-
-
 import SwiftUI
 
 struct MyNotePageView: View {
     
-    init() {
+    private func configureNavigationBar() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = UIColor(Color.white.opacity(0.5))
         appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
-        appearance.largeTitleTextAttributes = [
-            .foregroundColor: UIColor.black,
-        ]
-            
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+        
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
         UINavigationBar.appearance().standardAppearance = appearance
     }
     
-    
     @State private var navigateToAddNote = false
     @State private var navigateToNoteDetail = false
-    @EnvironmentObject var taskManager: TaskManager
+    @EnvironmentObject var noteManager: TaskManager
+    @Environment(\.presentationMode) var presentationMode
+    @State private var showingDetail:Bool = false
+    @State var selectedNote: Note = Note(name: "", description: "", isStarred: false, isSelected: false)
     
     var body: some View {
-        
         NavigationStack {
             VStack {
                 List {
-                    ForEach(0..<taskManager.notes.count, id: \.self) { index in
+                    ForEach(0..<noteManager.notes.count, id: \.self) { index in
                         Button(action: {
-//                            self.navigateToTaskDetail = true
+                            
+                            self.selectedNote = noteManager.notes[index]
+                            self.showingDetail = true
                         }) {
                             HStack {
                                 Button(action: {
-                                    self.taskManager.notes[index].isSelected.toggle()
+                                    self.noteManager.notes[index].isSelected.toggle()
                                 }) {
-                                    Image(systemName: taskManager.notes[index].isSelected ? "checkmark.square.fill" : "square")
+                                    Image(systemName: noteManager.notes[index].isSelected ? "checkmark.square.fill" : "square")
                                 }
                                 
-                                Text(taskManager.notes[index].name)
+                                Text(noteManager.notes[index].name)
                                 Spacer()
-                                if taskManager.notes[index].isStarred {
+                                if noteManager.notes[index].isStarred {
                                     Image(systemName: "star.fill")
                                         .foregroundColor(.yellow)
                                         .frame(width: 10, height: 20)
@@ -65,9 +59,9 @@ struct MyNotePageView: View {
                 .listStyle(PlainListStyle())
                 
                 Button(action: {
-                    for index in 0..<taskManager.notes.count {
-                        if taskManager.notes[index].isSelected {
-                            taskManager.notes[index].isStarred.toggle()
+                    for index in 0..<noteManager.notes.count {
+                        if noteManager.notes[index].isSelected {
+                            noteManager.notes[index].isStarred.toggle()
                         }
                     }
                 }){
@@ -84,7 +78,7 @@ struct MyNotePageView: View {
                 Spacer()
                 
                 Button (action: {
-                    taskManager.removeSelectedNotes()
+                    noteManager.removeSelectedNotes()
                 }){
                     Text("Delete Selected")
                 }
@@ -104,16 +98,34 @@ struct MyNotePageView: View {
             }
             .foregroundColor(.blue))
             .navigationDestination(isPresented: $navigateToAddNote) {
-                AddNoteView()}
+                AddNoteView()
             }
+
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Image(systemName: "arrow.left")
+                            .foregroundColor(.blue) // Set the color of the arrow to blue
+                    }
+                }
+            }
+            
             .onAppear {
-                navigateToAddNote = false
+                configureNavigationBar()
             }
+            .sheet(isPresented: $showingDetail) {
+//                NoteDetail(note: $selectedNote, showingDetail: $showingDetail)
+            }
+        }
+        
     }
 }
 
 struct MyNotePage_Previews: PreviewProvider {
     static var previews: some View {
-        MyNotePageView().environmentObject(TaskManager())
+        LandingPageView().environmentObject(TaskManager())
     }
 }
