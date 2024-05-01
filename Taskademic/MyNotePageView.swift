@@ -117,7 +117,7 @@ struct MyNotePageView: View {
                 configureNavigationBar()
             }
             .sheet(isPresented: $showingDetail) {
-//                NoteDetail(note: $selectedNote, showingDetail: $showingDetail)
+                NoteDetail(note: $selectedNote, showingDetail: $showingDetail)
             }
         }
         

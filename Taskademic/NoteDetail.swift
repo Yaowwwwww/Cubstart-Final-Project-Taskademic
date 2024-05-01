@@ -1,48 +1,72 @@
 import SwiftUI
 
 struct NoteDetail: View {
-    var note: (name: String, description: String, isStarred: Bool, isSelected: Bool)
-
-    init(note: (name: String, description: String, isStarred: Bool, isSelected: Bool)) {
-        self.note = note
+    @Binding var note: Note
+    @Binding private var showingDetail: Bool
+    @State private var navigateToNotes = false
+    @State private var showingSheet = false
+    @Environment(\.presentationMode) var presentationMode
+    
+    init(note: Binding<Note>, showingDetail: Binding<Bool>) {
+        self._note = note
+        self._showingDetail = showingDetail
+        
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = UIColor(Color.white.opacity(0.5))
         appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
-        appearance.largeTitleTextAttributes = [
-            .foregroundColor: UIColor.white
-        ]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
         
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
         UINavigationBar.appearance().standardAppearance = appearance
     }
-
+    
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 15, style: .continuous)
-                .fill(Color.white.opacity(0.8))
-                .shadow(radius: 10)
-                .frame(width: 339, height: 620)
-            VStack {
-                Text(note.description)
-                    .font(.system(size: 20, design: .rounded))
-                Spacer()
+        VStack {
+            ScrollView {
+                VStack(alignment: .leading) {
+                    Text(note.description)
+                        .font(.system(size: 20, design: .rounded))
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 15, style: .continuous)
+                                .fill(Color.white.opacity(0.8))
+                                .shadow(radius: 5)
+                        )
+                }
+                .padding()
             }
-            .frame(width: 310, height: 610, alignment: .leading)
-            .padding(.top, 23)
-            .padding(.leading, 8)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.blue.opacity(0.4))
+            
+            Button(action: {
+                self.showingSheet = true
+            }){
+                Text("Edit")
+            }
+            .bold()
+            .padding()
+            .frame(width: 340, height: 50)
+            .foregroundColor(.black)
+            .background(Color.white)
+            .cornerRadius(10)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.blue.opacity(0.4))
         .navigationTitle(note.name)
         .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(isPresented: $navigateToNotes) {
+            MyTaskPageView()
+        }
+        .navigationBarBackButtonHidden(true)
+        .sheet(isPresented: $showingSheet) {
+            EditNoteView(note: $note, showingDetail: $showingDetail ,showingSheet: $showingSheet)
+        }
     }
 }
 
 struct NoteDetail_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            NoteDetail(note: (name: "Example Note", description: "Detailed description of the note goes here. Include all relevant details to make sure it is clear.", isStarred: true, isSelected: false))
+            LandingPageView().environmentObject(TaskManager())
         }
     }
 }

@@ -1,41 +1,43 @@
 import SwiftUI
 
-struct EditTaskView: View {
-    @Binding var task: Task
+struct EditNoteView: View {
+    @Binding var note: Note
     @Binding var showingDetail: Bool
     @Binding var showingSheet: Bool
-    @EnvironmentObject var taskManager: TaskManager
+    @EnvironmentObject var noteManager: TaskManager
     @Environment(\.presentationMode) var presentationMode
 
-    // 获取与 task.id 相关联的 Task 的 Binding
-    func updateTaskBinding() -> Binding<Task> {
-        guard let index = taskManager.tasks.firstIndex(where: { $0.id == task.id }) else {
-            fatalError("Task with ID \(task.id) not found")
+
+    func updateNoteBinding() -> Binding<Note> {
+        guard let index = noteManager.notes.firstIndex(where: { $0.id == note.id }) else {
+            fatalError("Note with ID \(note.id) not found")
         }
-        return $taskManager.tasks[index]
+        return $noteManager.notes[index]
     }
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 Form {
                     Section(header: Text("Title").bold().foregroundColor(.black)) {
-                        TextField("Title", text: updateTaskBinding().name)
+                        TextField("Title", text: updateNoteBinding().name)
                     }
                     
                     Section(header: Text("Description").bold().foregroundColor(.black)) {
-                        TextEditor(text: updateTaskBinding().description)
+                        TextEditor(text: updateNoteBinding().description)
                             .frame(height: 200)
                     }
                     
+                    
                     Section(header: Text("Priority").bold().foregroundColor(.black)) {
-                        Toggle(isOn: updateTaskBinding().isStarred) {
-                            Text("Important Task")
+                        Toggle(isOn: updateNoteBinding().isStarred) {
+                            Text("Important Note")
                         }
                     }
                     
                     Section {
                         Button("Done") {
+//                            presentationMode.wrappedValue.dismiss()
                             showingSheet = false
                             showingDetail = false
                             // Any action to perform on done
@@ -48,7 +50,7 @@ struct EditTaskView: View {
                 }
             }
             .background(Color.blue)
-            .navigationBarTitle("Edit Task", displayMode: .inline)
+            .navigationBarTitle("Edit Note", displayMode: .inline)
             .navigationBarBackButtonHidden(true)
         }
         .onAppear {
@@ -67,4 +69,3 @@ struct EditTaskView: View {
         UINavigationBar.appearance().standardAppearance = appearance
     }
 }
-
