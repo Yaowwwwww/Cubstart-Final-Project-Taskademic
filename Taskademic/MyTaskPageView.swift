@@ -26,7 +26,7 @@ struct MyTaskPageView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var showingSheet = false
     
-    @State private var selectedTask: (name: String, description: String, isStarred: Bool, isSelected: Bool)?
+    @State private var selectedTask: Task?
     
     var body: some View {
     
@@ -107,11 +107,7 @@ struct MyTaskPageView: View {
             .foregroundColor(.blue))
             .navigationDestination(isPresented: $navigateToAddTask) {
                 AddTaskView()}
-            .navigationDestination(isPresented: $navigateToTaskDetail) {
-                if let task = selectedTask {
-                    TaskDetail(task: task)
-                }
-            }
+
             .navigationBarBackButtonHidden(true)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -127,10 +123,8 @@ struct MyTaskPageView: View {
             .onAppear {
                 configureNavigationBar()
             }
-            .sheet(isPresented: $showingSheet) {  // Sheet presentation
-                if let task = selectedTask {
-                    TaskDetail(task: task)
-                }
+            .sheet(item: $selectedTask) { task in
+                TaskDetail(task: .constant(task))
             }
         }
         

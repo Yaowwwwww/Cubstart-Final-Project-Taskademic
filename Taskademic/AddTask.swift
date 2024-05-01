@@ -30,7 +30,7 @@ struct AddTaskView: View {
                     
                     Section {
                         Button("Add Task") {
-                            taskManager.tasks.append((name: taskName, description: taskDescription, isStarred: isStarred, isSelected: false))
+                            taskManager.tasks.append(Task(name: taskName, description: taskDescription, isStarred: isStarred, isSelected: false))
                             self.navigateToMyTasks = true
                         }
                         .bold()

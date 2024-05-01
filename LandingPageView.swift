@@ -62,7 +62,6 @@ struct MainButtonStyle: ButtonStyle {
     }
 }
 
-// Assuming MyTaskPageView, MyNotePageView, MyEventPageView, and MyFavoritesPageView are properly defined somewhere else.
 
 struct LandingPageView_Previews: PreviewProvider {
     static var previews: some View {

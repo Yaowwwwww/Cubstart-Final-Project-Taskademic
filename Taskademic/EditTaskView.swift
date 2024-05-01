@@ -1,33 +1,40 @@
 import SwiftUI
 
 struct EditTaskView: View {
-    @Binding var task: (name: String, description: String, isStarred: Bool, isSelected: Bool)
-
+    @Binding var task: Task
     @EnvironmentObject var taskManager: TaskManager
-    
+    @Environment(\.presentationMode) var presentationMode
+
+    // 获取与 task.id 相关联的 Task 的 Binding
+    func updateTaskBinding() -> Binding<Task> {
+        guard let index = taskManager.tasks.firstIndex(where: { $0.id == task.id }) else {
+            fatalError("Task with ID \(task.id) not found")
+        }
+        return $taskManager.tasks[index]
+    }
+
     var body: some View {
         NavigationStack {
             VStack {
                 Form {
                     Section(header: Text("Title").bold().foregroundColor(.black)) {
-                        TextField("Title", text: $task.name)
+                        TextField("Title", text: updateTaskBinding().name)
                     }
                     
                     Section(header: Text("Description").bold().foregroundColor(.black)) {
-                        TextEditor(text: $task.description)
-                            .frame(height: 200)
+                        TextField("Description", text: updateTaskBinding().description)
                     }
                     
                     Section(header: Text("Priority").bold().foregroundColor(.black)) {
-                        Toggle(isOn: $task.isStarred) {
+                        Toggle(isOn: updateTaskBinding().isStarred) {
                             Text("Important Task")
                         }
                     }
                     
                     Section {
-                        Button("Save Task") {
-//                            taskManager.tasks.append((name: taskName, description: taskDescription, isStarred: isStarred, isSelected: false))
-//                            self.navigateToMyTasks = true
+                        Button("Done") {
+                            // Any action to perform on done
+                            presentationMode.wrappedValue.dismiss()
                         }
                         .bold()
                         .frame(width: 500, height: 30)
@@ -38,13 +45,11 @@ struct EditTaskView: View {
             }
             .background(Color.blue)
             .navigationBarTitle("Edit Task", displayMode: .inline)
-        
             .navigationBarBackButtonHidden(true)
         }
         .onAppear {
             configureNavigationBar()
         }
-        
     }
 
     private func configureNavigationBar() {
@@ -56,11 +61,5 @@ struct EditTaskView: View {
         
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
         UINavigationBar.appearance().standardAppearance = appearance
-    }
-}
-
-struct EditTaskPageView: PreviewProvider {
-    static var previews: some View {
-        EditTaskView().environmentObject(TaskManager())
     }
 }

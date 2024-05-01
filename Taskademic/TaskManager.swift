@@ -8,8 +8,16 @@
 import Combine
 import Foundation
 
+struct Task: Identifiable {
+    var id: UUID = UUID()  // 每个任务实例自动获得一个独特的 UUID
+    var name: String
+    var description: String
+    var isStarred: Bool
+    var isSelected: Bool = false
+}
+
 class TaskManager: ObservableObject {
-    @Published var tasks: [(name: String, description: String, isStarred: Bool, isSelected: Bool)] = []
+    @Published var tasks: [Task] = []
     @Published var notes: [(name: String, description: String, isStarred: Bool, isSelected: Bool)] = []
     @Published var events: [(name: String, date: Date, time: Date, location: String, isStarred: Bool, isSelected: Bool)] = []
     

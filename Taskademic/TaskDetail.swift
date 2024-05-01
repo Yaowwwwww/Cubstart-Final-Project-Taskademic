@@ -1,11 +1,14 @@
 import SwiftUI
 
 struct TaskDetail: View {
-    var task: (name: String, description: String, isStarred: Bool, isSelected: Bool)
+    @Binding var task: Task
     @State private var navigateToTasks = false
+    @State private var showingSheet = false
+    @Environment(\.presentationMode) var presentationMode
 
-    init(task: (name: String, description: String, isStarred: Bool, isSelected: Bool)) {
-        self.task = task
+    init(task: Binding<Task>) {
+        self._task = task
+        
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = UIColor(Color.white.opacity(0.5))
@@ -35,7 +38,7 @@ struct TaskDetail: View {
             .background(Color.blue.opacity(0.4))
 
             Button(action: {
-                
+                self.showingSheet = true
             }){
                 Text("Edit")
             }
@@ -52,6 +55,9 @@ struct TaskDetail: View {
             MyTaskPageView()
         }
         .navigationBarBackButtonHidden(true)
+        .sheet(isPresented: $showingSheet) { 
+            EditTaskView(task: $task)
+        }
     }
     
 }
@@ -59,7 +65,7 @@ struct TaskDetail: View {
 struct TaskDetail_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            TaskDetail(task: (name: "Example Task", description: "Detailed description of the task.", isStarred: true, isSelected: false))
+            LandingPageView().environmentObject(TaskManager())
         }
     }
 }
