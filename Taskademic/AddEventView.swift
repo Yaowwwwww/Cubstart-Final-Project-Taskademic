@@ -1,14 +1,16 @@
 import SwiftUI
 
 struct AddEventView: View {
+
     
     @State private var eventName: String = ""
-    @State private var dueDate: Date = Date()
-    @State private var addedTime: Date = Date()
-    @State private var addedLocation: String = ""
+    @State private var eventDate: Date = Date()
+    @State private var eventTime: Date = Date()
+    @State private var eventLocation: String = ""
     @State private var navigateToMyEvents = false
-    @EnvironmentObject var taskManager: TaskManager
     @State private var isStarred: Bool = false
+    @EnvironmentObject var taskManager: TaskManager
+    @Environment(\.presentationMode) var presentationMode
     
     
     var body: some View {
@@ -20,20 +22,20 @@ struct AddEventView: View {
                     }
                     
                     Section(header: Text("Date").bold().foregroundColor(.black)) {
-                        DatePicker("", selection: $dueDate, in: Date()..., displayedComponents: .date)
+                        DatePicker("", selection: $eventDate, in: Date()..., displayedComponents: .date)
                     }
                     
                     Section(header: Text("Time").bold().foregroundColor(.black)) {
-                        DatePicker("", selection: $addedTime, displayedComponents: .hourAndMinute)
+                        DatePicker("", selection: $eventTime, displayedComponents: .hourAndMinute)
                                         }
                     
                     Section(header: Text("Location").bold().foregroundColor(.black)) {
-                        TextField("Location", text: $addedLocation)
+                        TextField("Location", text: $eventLocation)
                     }
                     
                     Section {
                         Button("Add Event") {
-                            taskManager.events.append((name: eventName, date:dueDate, time: addedTime, location: addedLocation, isStarred:isStarred, isSelected: false))
+                            taskManager.events.append(Event(name: eventName, date:eventDate, time: eventTime, location: eventLocation, isStarred: isStarred, isSelected: false))
                             navigateToMyEvents = true
                         }
                     }.frame(maxWidth: .infinity, alignment: .center)

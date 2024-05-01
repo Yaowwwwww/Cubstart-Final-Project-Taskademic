@@ -2,12 +2,14 @@ import SwiftUI
 
 struct TaskDetail: View {
     @Binding var task: Task
+    @Binding private var showingDetail: Bool
     @State private var navigateToTasks = false
     @State private var showingSheet = false
     @Environment(\.presentationMode) var presentationMode
 
-    init(task: Binding<Task>) {
+    init(task: Binding<Task>, showingDetail: Binding<Bool>) {
         self._task = task
+        self._showingDetail = showingDetail
         
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
@@ -56,7 +58,7 @@ struct TaskDetail: View {
         }
         .navigationBarBackButtonHidden(true)
         .sheet(isPresented: $showingSheet) { 
-            EditTaskView(task: $task)
+            EditTaskView(task: $task, showingDetail: $showingDetail ,showingSheet: $showingSheet)
         }
     }
     

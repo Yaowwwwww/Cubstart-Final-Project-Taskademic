@@ -24,9 +24,8 @@ struct MyTaskPageView: View {
     @State private var navigateToTaskDetail = false
     @EnvironmentObject var taskManager: TaskManager
     @Environment(\.presentationMode) var presentationMode
-    @State private var showingSheet = false
-    
-    @State private var selectedTask: Task?
+    @State private var showingDetail:Bool = false
+    @State var selectedTask: Task = Task(name: "", description: "", isStarred: false, isSelected: false)
     
     var body: some View {
     
@@ -35,8 +34,9 @@ struct MyTaskPageView: View {
                 List {
                     ForEach(0..<taskManager.tasks.count, id: \.self) { index in
                         Button(action: {
+                            
                             self.selectedTask = taskManager.tasks[index]
-                            self.showingSheet = true
+                            self.showingDetail = true
                         }) {
                             HStack {
                                 Button(action: {
@@ -123,8 +123,9 @@ struct MyTaskPageView: View {
             .onAppear {
                 configureNavigationBar()
             }
-            .sheet(item: $selectedTask) { task in
-                TaskDetail(task: .constant(task))
+            .sheet(isPresented: $showingDetail) {
+                // Assuming selectedTask is not nil here, handle nil case appropriately
+                TaskDetail(task: $selectedTask, showingDetail: $showingDetail)
             }
         }
         

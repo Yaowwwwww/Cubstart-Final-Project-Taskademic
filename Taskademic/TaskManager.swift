@@ -9,17 +9,35 @@ import Combine
 import Foundation
 
 struct Task: Identifiable {
-    var id: UUID = UUID()  // 每个任务实例自动获得一个独特的 UUID
+    var id: UUID = UUID()
     var name: String
     var description: String
     var isStarred: Bool
     var isSelected: Bool = false
 }
 
+struct Note: Identifiable {
+    var id: UUID = UUID()
+    var name: String
+    var description: String
+    var isStarred: Bool
+    var isSelected: Bool = false
+}
+
+struct Event: Identifiable {
+    var id: UUID = UUID()
+    var name: String
+    var date: Date
+    var time: Date
+    var location: String
+    var isStarred: Bool
+    var isSelected: Bool = false
+}
+
 class TaskManager: ObservableObject {
     @Published var tasks: [Task] = []
-    @Published var notes: [(name: String, description: String, isStarred: Bool, isSelected: Bool)] = []
-    @Published var events: [(name: String, date: Date, time: Date, location: String, isStarred: Bool, isSelected: Bool)] = []
+    @Published var notes: [Note] = []
+    @Published var events: [Event] = []
     
     func removeSelectedTasks() {
         tasks.removeAll { $0.isSelected }

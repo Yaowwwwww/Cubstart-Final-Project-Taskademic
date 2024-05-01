@@ -2,6 +2,8 @@ import SwiftUI
 
 struct EditTaskView: View {
     @Binding var task: Task
+    @Binding var showingDetail: Bool
+    @Binding var showingSheet: Bool
     @EnvironmentObject var taskManager: TaskManager
     @Environment(\.presentationMode) var presentationMode
 
@@ -23,7 +25,9 @@ struct EditTaskView: View {
                     
                     Section(header: Text("Description").bold().foregroundColor(.black)) {
                         TextField("Description", text: updateTaskBinding().description)
+                            .frame(height: 200)
                     }
+                    
                     
                     Section(header: Text("Priority").bold().foregroundColor(.black)) {
                         Toggle(isOn: updateTaskBinding().isStarred) {
@@ -33,8 +37,10 @@ struct EditTaskView: View {
                     
                     Section {
                         Button("Done") {
+//                            presentationMode.wrappedValue.dismiss()
+                            showingSheet = false
+                            showingDetail = false
                             // Any action to perform on done
-                            presentationMode.wrappedValue.dismiss()
                         }
                         .bold()
                         .frame(width: 500, height: 30)
