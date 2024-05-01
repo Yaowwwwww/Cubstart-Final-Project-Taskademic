@@ -36,7 +36,7 @@ struct MyTaskPageView: View {
                     ForEach(0..<taskManager.tasks.count, id: \.self) { index in
                         Button(action: {
                             self.selectedTask = taskManager.tasks[index]
-                            self.navigateToTaskDetail = true
+                            self.showingSheet = true
                         }) {
                             HStack {
                                 Button(action: {
@@ -126,6 +126,11 @@ struct MyTaskPageView: View {
             
             .onAppear {
                 configureNavigationBar()
+            }
+            .sheet(isPresented: $showingSheet) {  // Sheet presentation
+                if let task = selectedTask {
+                    TaskDetail(task: task)
+                }
             }
         }
         

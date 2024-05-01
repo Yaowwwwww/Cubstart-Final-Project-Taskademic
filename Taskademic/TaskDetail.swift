@@ -35,9 +35,9 @@ struct TaskDetail: View {
             .background(Color.blue.opacity(0.4))
 
             Button(action: {
-                navigateToTasks = true
+                
             }){
-                Text("Done")
+                Text("Edit")
             }
             .bold()
             .padding()
