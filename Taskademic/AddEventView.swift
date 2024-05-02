@@ -35,7 +35,7 @@ struct AddEventView: View {
                     
                     Section(header: Text("Priority").bold().foregroundColor(.black)) {
                         Toggle(isOn: $isStarred) {
-                            Text("Important Note")
+                            Text("Important Event")
                         }
                     }
                     

@@ -28,7 +28,7 @@ struct MyEventPageView: View {
     @EnvironmentObject var eventManager: TaskManager
     @State private var showingDetail: Bool = false
     @State var selectedEvent: Event = Event(name: "", date: Date(), time: Date(), location: "", isStarred: false)
-    
+    @EnvironmentObject var taskManager: TaskManager
     var body: some View {
         
         NavigationStack {
@@ -46,7 +46,9 @@ struct MyEventPageView: View {
                                     Image(systemName: eventManager.events[index].isSelected ? "checkmark.square.fill" : "square")
                                 }
                                 
-                                Text(eventManager.events[index].name)
+                                
+                                eventDetailView(for: (name: taskManager.events[index].name, date: taskManager.events[index].date, time: taskManager.events[index].time, location: taskManager.events[index].location, isStarred: taskManager.events[index].isStarred))
+
                                 Spacer()
                                 if eventManager.events[index].isStarred {
                                     Image(systemName: "star.fill")
@@ -131,8 +133,38 @@ struct MyEventPageView: View {
 }
 
 
+private func eventDetailView(for event: (name: String, date: Date, time:Date, location: String, isStarred: Bool)) -> some View {
+        VStack(alignment: .leading, spacing: 5) {
+            Text(event.name)
+            HStack(){
+                Text(formatDate(event.date))
+                               .foregroundColor(.gray)
+                               .font(.caption)
+                Text(formatTime(event.time))
+                               .foregroundColor(.gray)
+                               .font(.caption)
+            }
+            Text(event.location).foregroundColor(.gray)
+                .font(.caption)
+        }
+    }
+
+private func formatDate(_ date: Date) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "MMM d, yyyy"
+    return dateFormatter.string(from: date)
+}
+
+private func formatTime(_ time: Date) -> String {
+    let timeFormatter = DateFormatter()
+    timeFormatter.dateFormat = "h:mm a"
+    return timeFormatter.string(from: time)
+}
+
 struct MyEventPage_Previews: PreviewProvider {
     static var previews: some View {
-        LandingPageView().environmentObject(TaskManager())
+        MyEventPageView().environmentObject(TaskManager())
     }
 }
+
+
