@@ -66,8 +66,6 @@ struct TaskDetail: View {
 
 struct TaskDetail_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            LandingPageView().environmentObject(TaskManager())
-        }
+        LandingPageView().environmentObject(TaskManager())
     }
 }

@@ -29,8 +29,14 @@ struct AddEventView: View {
                         DatePicker("", selection: $eventTime, displayedComponents: .hourAndMinute)
                                         }
                     
-                    Section(header: Text("Location").bold().foregroundColor(.black)) {
-                        TextField("Location", text: $eventLocation)
+                    Section(header: Text("Location / Description").bold().foregroundColor(.black)) {
+                        TextField("", text: $eventLocation)
+                    }
+                    
+                    Section(header: Text("Priority").bold().foregroundColor(.black)) {
+                        Toggle(isOn: $isStarred) {
+                            Text("Important Note")
+                        }
                     }
                     
                     Section {
@@ -40,7 +46,8 @@ struct AddEventView: View {
                         }
                     }.frame(maxWidth: .infinity, alignment: .center)
                 }
-            }.background(Color.blue).navigationBarTitle("Add Event", displayMode: .inline)
+            }.background(Color.blue)
+            .navigationBarTitle("Add Event", displayMode: .inline)
             .navigationDestination(isPresented: $navigateToMyEvents) {
                 MyEventPageView()
             }

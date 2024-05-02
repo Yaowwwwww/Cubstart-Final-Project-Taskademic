@@ -33,8 +33,10 @@ struct NoteDetail: View {
                                 .fill(Color.white.opacity(0.8))
                                 .shadow(radius: 5)
                         )
+                        .frame(width: 320)
                 }
                 .padding()
+                .frame(width: 320)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.blue.opacity(0.4))
@@ -65,8 +67,6 @@ struct NoteDetail: View {
 
 struct NoteDetail_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            LandingPageView().environmentObject(TaskManager())
-        }
+        LandingPageView().environmentObject(TaskManager())
     }
 }

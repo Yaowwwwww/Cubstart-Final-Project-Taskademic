@@ -34,9 +34,9 @@ struct LandingPageView: View {
                         .buttonStyle(MainButtonStyle())
                         .padding(.bottom, 10).bold()
 
-//                    NavigationLink("High Priorities", destination: MyFavoritesPageView())
-//                        .buttonStyle(MainButtonStyle())
-//                        .padding(.bottom, 10).bold()
+                    NavigationLink("High Priority Tasks", destination: HighPriorityView())
+                        .buttonStyle(MainButtonStyle())
+                        .padding(.bottom, 10).bold()
                 }
 
                 Spacer()

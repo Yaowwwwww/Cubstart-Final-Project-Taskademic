@@ -1,106 +1,77 @@
-//
-//  NoteDetail.swift
-//  Taskademic
-//
-//  Created by zhenwang on 4/28/24.
-//
-
-
 import SwiftUI
 
 struct EventDetail: View {
-    @State private var isFavorite = false
-
-    init() {
+    @Binding var event: Event
+    @Binding private var showingDetail: Bool
+    @State private var navigateToEvents = false
+    @State private var showingSheet = false
+    @Environment(\.presentationMode) var presentationMode
+    
+    init(event: Binding<Event>, showingDetail: Binding<Bool>) {
+        self._event = event
+        self._showingDetail = showingDetail
+        
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = UIColor(Color.white.opacity(0.5))
         appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
-        appearance.largeTitleTextAttributes = [
-            .foregroundColor: UIColor.white
-        ]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
         
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
         UINavigationBar.appearance().standardAppearance = appearance
     }
-
+    
     var body: some View {
         VStack {
-//            CardView(title: "Task 1", description: "Some Description...")
-//                .padding()
-
-            Spacer()
-
-            HStack(spacing: 20) {
-                Button(action: {
-                    // Your code for deleting the note goes here
-                }) {
-                    Text("Delete Note")
-                        .foregroundColor(.black)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .shadow(radius: 2)
+            ScrollView {
+                VStack(alignment: .leading) {
+                    Group {
+                        Text(event.name)
+                        Text(event.date, format: Date.FormatStyle().year().month().day())
+                        Text(event.time, format: Date.FormatStyle().hour().minute())
+                        Text(event.location)
+                    }
                 }
-
-                Button(action: {
-                    self.isFavorite.toggle()
-                    // Your code for marking/unmarking as favorite goes here
-                }) {
-                    Text(isFavorite ? "Unmark as Favorite" : "Mark as Favorite")
-                        .foregroundColor(.black)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .shadow(radius: 2)
-                }
-            }.padding()
-        }
-        .background(Color.blue.opacity(0.4))
-        .navigationTitle("Event 1")
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarItems(leading: Button(action: {
-            // Your code for back action goes here
-        }) {
-            Image(systemName: "arrow.left")
-                .foregroundColor(.black)
-        })
-    }
-}
-
-struct CardView12: View {
-    var title: String
-    var description: String
-
-    var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 15, style: .continuous)
-                .fill(Color.white.opacity(0.6))
-                .shadow(radius: 10)
-
-            VStack(alignment: .leading) {
-                Text(title)
-                    .font(.headline)
-                    .padding([.top, .leading, .trailing])
-                
-                Text(description)
-                    .font(.subheadline)
-                    .padding([.leading, .bottom, .trailing])
+                .bold()
+                .font(.system(size: 20, design: .rounded))
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 30, style: .continuous)
+                        .fill(Color.white.opacity(0.83))
+                        .shadow(radius: 3)
+                )
+                .padding(.top, 38)
+                .frame(width: 340)
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.blue.opacity(0.4))
+            
+            Button(action: {
+                self.showingSheet = true
+            }){
+                Text("Edit")
+            }
+            .bold()
+            .padding()
+            .frame(width: 340, height: 50)
+            .foregroundColor(.black)
+            .background(Color.white)
+            .cornerRadius(10)
         }
-        .frame(height: 600)
+        .navigationTitle(event.name)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(isPresented: $navigateToEvents) {
+            MyTaskPageView()
+        }
+        .navigationBarBackButtonHidden(true)
+        .sheet(isPresented: $showingSheet) {
+            EditEventView(event: $event, showingDetail: $showingDetail ,showingSheet: $showingSheet)
+        }
     }
 }
 
 struct EventDetail_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            EventDetail()
-        }
+        LandingPageView().environmentObject(TaskManager())
     }
 }
-
-
-

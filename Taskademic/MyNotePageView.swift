@@ -58,6 +58,9 @@ struct MyNotePageView: View {
                 .padding(.top, 10)
                 .listStyle(PlainListStyle())
                 
+                Divider()
+                    .padding(.bottom,11)
+                
                 Button(action: {
                     for index in 0..<noteManager.notes.count {
                         if noteManager.notes[index].isSelected {
@@ -89,7 +92,7 @@ struct MyNotePageView: View {
                 .cornerRadius(10)
                 .shadow(radius: 2)
                 
-                Spacer()
+            
             }
             .background(Color.blue.opacity(0.4))
             .navigationBarTitle("My Notes", displayMode: .inline)

@@ -22,30 +22,33 @@ struct MyEventPageView: View {
         UINavigationBar.appearance().standardAppearance = appearance
     }
     
-    
+    @Environment(\.presentationMode) var presentationMode
     @State private var navigateToAddEvent = false
     @State private var navigateToEventDetail = false
-    @EnvironmentObject var taskManager: TaskManager
+    @EnvironmentObject var eventManager: TaskManager
+    @State private var showingDetail: Bool = false
+    @State var selectedEvent: Event = Event(name: "", date: Date(), time: Date(), location: "", isStarred: false)
     
     var body: some View {
         
         NavigationStack {
             VStack {
                 List {
-                    ForEach(0..<taskManager.events.count, id: \.self) { index in
+                    ForEach(0..<eventManager.events.count, id: \.self) { index in
                         Button(action: {
-//                            self.navigateToTaskDetail = true
+                            self.selectedEvent = eventManager.events[index]
+                            self.showingDetail = true
                         }) {
                             HStack {
                                 Button(action: {
-                                    self.taskManager.events[index].isSelected.toggle()
+                                    self.eventManager.events[index].isSelected.toggle()
                                 }) {
-                                    Image(systemName: taskManager.events[index].isSelected ? "checkmark.square.fill" : "square")
+                                    Image(systemName: eventManager.events[index].isSelected ? "checkmark.square.fill" : "square")
                                 }
                                 
-                                Text(taskManager.events[index].name)
+                                Text(eventManager.events[index].name)
                                 Spacer()
-                                if taskManager.events[index].isStarred {
+                                if eventManager.events[index].isStarred {
                                     Image(systemName: "star.fill")
                                         .foregroundColor(.yellow)
                                         .frame(width: 10, height: 20)
@@ -64,10 +67,14 @@ struct MyEventPageView: View {
                 .padding(.top, 10)
                 .listStyle(PlainListStyle())
                 
+                
+                Divider()
+                    .padding(.bottom,11)
+                
                 Button(action: {
-                    for index in 0..<taskManager.events.count {
-                        if taskManager.events[index].isSelected {
-                            taskManager.events[index].isStarred.toggle()
+                    for index in 0..<eventManager.events.count {
+                        if eventManager.events[index].isSelected {
+                            eventManager.events[index].isStarred.toggle()
                         }
                     }
                 }){
@@ -84,7 +91,7 @@ struct MyEventPageView: View {
                 Spacer()
                 
                 Button (action: {
-                    taskManager.removeSelectedEvents()
+                    eventManager.removeSelectedEvents()
                 }){
                     Text("Delete Selected")
                 }
@@ -95,16 +102,30 @@ struct MyEventPageView: View {
                 .cornerRadius(10)
                 .shadow(radius: 2)
                 
-                Spacer()
+                
             }
             .background(Color.blue.opacity(0.4))
             .navigationBarTitle("My Events", displayMode: .inline)
             .navigationBarItems(trailing: Button("Add Event") {
                 navigateToAddEvent = true
             }
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Image(systemName: "arrow.left")
+                            .foregroundColor(.blue) // Set the color of the arrow to blue
+                    }
+                }
+            }
             .foregroundColor(.blue))
             .navigationDestination(isPresented: $navigateToAddEvent) {
                 AddEventView()}
+            }
+            .sheet(isPresented: $showingDetail) {
+                EventDetail(event: $selectedEvent, showingDetail: $showingDetail)
             }
     }
 }
@@ -112,6 +133,6 @@ struct MyEventPageView: View {
 
 struct MyEventPage_Previews: PreviewProvider {
     static var previews: some View {
-        MyEventPageView().environmentObject(TaskManager())
+        LandingPageView().environmentObject(TaskManager())
     }
 }

@@ -16,6 +16,7 @@
 		5841F4EA2BE1B4E200F15DA5 /* HighPriorityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5841F4E92BE1B4E200F15DA5 /* HighPriorityView.swift */; };
 		5841F4F02BE2A30C00F15DA5 /* EditTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5841F4EF2BE2A30C00F15DA5 /* EditTaskView.swift */; };
 		5841F4F22BE2D2B700F15DA5 /* EditNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5841F4F12BE2D2B700F15DA5 /* EditNoteView.swift */; };
+		5841F4F62BE3019400F15DA5 /* EditEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5841F4F52BE3019400F15DA5 /* EditEventView.swift */; };
 		58BC83712BD0441E004F4420 /* TaskademicApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BC83702BD0441E004F4420 /* TaskademicApp.swift */; };
 		58BC83732BD0441E004F4420 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BC83722BD0441E004F4420 /* ContentView.swift */; };
 		58BC83752BD04420004F4420 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58BC83742BD04420004F4420 /* Assets.xcassets */; };
@@ -37,6 +38,7 @@
 		5841F4E92BE1B4E200F15DA5 /* HighPriorityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighPriorityView.swift; sourceTree = "<group>"; };
 		5841F4EF2BE2A30C00F15DA5 /* EditTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTaskView.swift; sourceTree = "<group>"; };
 		5841F4F12BE2D2B700F15DA5 /* EditNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNoteView.swift; sourceTree = "<group>"; };
+		5841F4F52BE3019400F15DA5 /* EditEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEventView.swift; sourceTree = "<group>"; };
 		58BC836D2BD0441E004F4420 /* Taskademic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Taskademic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58BC83702BD0441E004F4420 /* TaskademicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskademicApp.swift; sourceTree = "<group>"; };
 		58BC83722BD0441E004F4420 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 				108AE2132BD217F700439B88 /* MyEventPageView.swift */,
 				108AE2112BD20F7100439B88 /* AddEventView.swift */,
 				7DCF3BE32BDF51310050CCF6 /* EventDetail.swift */,
+				5841F4F52BE3019400F15DA5 /* EditEventView.swift */,
 				5841F4E92BE1B4E200F15DA5 /* HighPriorityView.swift */,
 				58BC83742BD04420004F4420 /* Assets.xcassets */,
 				58BC83762BD04420004F4420 /* Taskademic.entitlements */,
@@ -197,6 +200,7 @@
 				58BC83882BD0FEA1004F4420 /* LandingPageView.swift in Sources */,
 				108AE2182BD223C200439B88 /* AddNote.swift in Sources */,
 				58BC83712BD0441E004F4420 /* TaskademicApp.swift in Sources */,
+				5841F4F62BE3019400F15DA5 /* EditEventView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
