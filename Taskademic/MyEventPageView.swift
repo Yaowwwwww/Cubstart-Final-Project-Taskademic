@@ -133,7 +133,7 @@ struct MyEventPageView: View {
 }
 
 
-private func eventDetailView(for event: (name: String, date: Date, time:Date, location: String, isStarred: Bool)) -> some View {
+public func eventDetailView(for event: (name: String, date: Date, time:Date, location: String, isStarred: Bool)) -> some View {
         VStack(alignment: .leading, spacing: 5) {
             Text(event.name)
             HStack(){

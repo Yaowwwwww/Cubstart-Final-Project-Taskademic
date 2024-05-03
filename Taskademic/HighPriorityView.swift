@@ -181,7 +181,8 @@ struct HighPriorityView: View {
                                         Image(systemName: taskManager.events[index].isSelected ? "checkmark.square.fill" : "square")
                                     }
                                     
-                                    Text(taskManager.events[index].name)
+                                    eventDetailView(for: (name: taskManager.events[index].name, date: taskManager.events[index].date, time: taskManager.events[index].time, location: taskManager.events[index].location, isStarred: taskManager.events[index].isStarred))
+
                                     Spacer()
                                     if taskManager.events[index].isStarred {
                                         Image(systemName: "star.fill")
