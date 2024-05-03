@@ -221,7 +221,7 @@ struct HighPriorityView: View {
                             taskManager.notes[index].isStarred.toggle()
                         }
                     }
-                    for index in 0..<taskManager.notes.count {
+                    for index in 0..<taskManager.events.count {
                         if taskManager.events[index].isSelected {
                             taskManager.events[index].isStarred.toggle()
                         }
